@@ -1,0 +1,10 @@
+version: "3"
+services:
+  db:
+    image: postgres:9.4.12-alpine
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: qlhs
+    ports:
+    - 5432:5432
+
