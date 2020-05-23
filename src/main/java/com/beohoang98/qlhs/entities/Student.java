@@ -8,25 +8,23 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity()
 @Table(name = "student")
 public class Student {
-  @Id
-  private Integer mssv;
+  @Id private Integer mssv;
   private String name;
   private String cmnd;
 
   @Enumerated(EnumType.ORDINAL)
   private Gender gender;
 
-  @OneToMany(targetEntity = SchoolClass.class, fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER)
   private SchoolClass schoolClass;
 
-  @ManyToMany
-  private List<ClassCourse> courses;
+  @ManyToMany private List<ClassCourse> courses;
 
   public Integer getMSSV() {
     return mssv;

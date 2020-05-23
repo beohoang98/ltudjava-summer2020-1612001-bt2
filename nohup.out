@@ -1489,3 +1489,4 @@ java.lang.IllegalStateException: TextAttributeKey(name:'Number', fallbackAttribu
 2020-05-23 22:55:33,933 [15068529]  ERROR - ditor.colors.TextAttributesKey - Plugin to blame: YAML/Ansible support version: 0.9.5 
 2020-05-23 22:55:33,933 [15068529]  ERROR - ditor.colors.TextAttributesKey - Last Action: ShowSettings 
 2020-05-23 22:55:37,437 [15072033]   WARN - .diagnostic.PerformanceWatcher - UI was frozen for 7167ms, details saved to /home/noobcoder/.cache/JetBrains/IdeaIC2020.1/log/threadDumps-freeze-20200523-225535-IC-201.7223.91-ComponentManagerImpl.doGetService-7sec 
+2020-05-23 23:15:36,349 [16270945]   WARN - .diagnostic.PerformanceWatcher - UI was frozen for 5409ms, details saved to /home/noobcoder/.cache/JetBrains/IdeaIC2020.1/log/threadDumps-freeze-20200523-231535-IC-201.7223.91-XInputMethod.setXICFocusNative-5sec 

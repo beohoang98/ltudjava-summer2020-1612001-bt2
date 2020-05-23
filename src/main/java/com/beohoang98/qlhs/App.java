@@ -3,8 +3,15 @@
  */
 package com.beohoang98.qlhs;
 
-public class App {
-  public static void main(String[] args) {
+import com.beohoang98.qlhs.utils.HBUtils;
 
+import org.hibernate.Session;
+
+import java.io.IOException;
+
+public class App {
+  public static void main(String[] args) throws IOException {
+    Session session = HBUtils.getSessionFactory().openSession();
+    session.close();
   }
 }
