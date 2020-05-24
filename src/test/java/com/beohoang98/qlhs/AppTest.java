@@ -3,12 +3,21 @@
  */
 package com.beohoang98.qlhs;
 
+import com.beohoang98.qlhs.utils.HBUtils;
+
+import org.hibernate.SessionFactory;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertTrue;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
-    }
+  @Test
+  public void hbUtilsShouldDown() throws IOException {
+    SessionFactory factory = HBUtils.getSessionFactory();
+    assertTrue(factory.isOpen());
+    HBUtils.down();
+    assertTrue(factory.isClosed());
+  }
 }

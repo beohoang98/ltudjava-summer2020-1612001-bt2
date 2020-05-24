@@ -5,13 +5,17 @@ package com.beohoang98.qlhs;
 
 import com.beohoang98.qlhs.utils.HBUtils;
 
-import org.hibernate.Session;
-
 import java.io.IOException;
 
 public class App {
   public static void main(String[] args) throws IOException {
-    Session session = HBUtils.getSessionFactory().openSession();
-    session.close();
+    Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+  }
+
+  public static class ShutdownHook extends Thread {
+    @Override
+    public void run() {
+      HBUtils.down();
+    }
   }
 }
