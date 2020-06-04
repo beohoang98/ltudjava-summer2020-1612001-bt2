@@ -21,7 +21,7 @@ public class HBUtils {
   @PersistenceContext private static SessionFactory sessionFactory;
 
   private static synchronized SessionFactory load() throws IOException {
-    Dotenv dotenv = Dotenv.load();
+    Dotenv dotenv = Dotenv.configure().ignoreIfMissing().ignoreIfMalformed().load();
     Properties properties = new Properties();
     properties.load(App.class.getClassLoader().getResourceAsStream("hibernate.properties"));
     if (!properties.containsKey("hibernate.connection.url")) {
