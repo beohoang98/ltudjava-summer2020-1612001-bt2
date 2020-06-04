@@ -3,13 +3,47 @@
  */
 package com.beohoang98.qlhs;
 
+import com.beohoang98.qlhs.services.AuthService;
+import com.beohoang98.qlhs.ui.Home;
+import com.beohoang98.qlhs.ui.Login;
+import com.beohoang98.qlhs.utils.AppConfig;
 import com.beohoang98.qlhs.utils.HBUtils;
 
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 public class App {
+  static Login login;
+  static Home home;
+
   public static void main(String[] args) throws IOException {
     Runtime.getRuntime().addShutdownHook(new ShutdownHook());
+    bootstrap();
+    SwingUtilities.invokeLater(() -> {
+      Login login = new Login();
+      login.setVisible(true);
+      login.setLoginSuccessHandler(() -> {
+        System.out.println("Login success");
+        login.setVisible(false);
+        login.dispose();
+        showHome();
+      });
+    });
+  }
+
+  public static void bootstrap() {
+    // check connection
+    String defaultAdminEmail = AppConfig.get().getProperty("default_admin.email");
+    boolean isAdminExists = AuthService.exists(defaultAdminEmail);
+    if (!isAdminExists) {
+      String defaultAdminPassword = AppConfig.get().getProperty("default_admin.password");
+      AuthService.create(defaultAdminEmail, defaultAdminPassword);
+    }
+  }
+
+  public static void showHome() {
+    home = new Home();
   }
 
   public static class ShutdownHook extends Thread {

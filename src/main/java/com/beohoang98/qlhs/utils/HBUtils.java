@@ -24,7 +24,9 @@ public class HBUtils {
     Dotenv dotenv = Dotenv.load();
     Properties properties = new Properties();
     properties.load(App.class.getClassLoader().getResourceAsStream("hibernate.properties"));
-    properties.setProperty("hibernate.connection.url", dotenv.get("JDBC_DATABASE_URL"));
+    if (!properties.containsKey("hibernate.connection.url")) {
+      properties.setProperty("hibernate.connection.url", dotenv.get("JDBC_DATABASE_URL"));
+    }
     return new Configuration()
         .addProperties(properties)
         .addAnnotatedClass(Student.class)
@@ -44,6 +46,6 @@ public class HBUtils {
   }
 
   public static void down() {
-    sessionFactory.close();
+    if (sessionFactory != null) sessionFactory.close();
   }
 }

@@ -14,8 +14,6 @@ import java.util.Optional;
 
 import javax.persistence.PersistenceContext;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 interface DAOInterface<T, ID extends Serializable> {
   Optional<T> findOne(ID id);
 
@@ -31,8 +29,7 @@ interface DAOInterface<T, ID extends Serializable> {
 public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
   protected SessionFactory sessionFactory = HBUtils.getSessionFactory();
 
-  @PersistenceContext
-  protected Session session = sessionFactory.openSession();
+  @PersistenceContext protected Session session = sessionFactory.openSession();
 
   protected Class<T> classType;
 
@@ -42,7 +39,7 @@ public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
 
   @Override
   public Optional<T> findOne(ID o) {
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   @Override

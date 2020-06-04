@@ -40,4 +40,9 @@ public class AuthService {
         BCrypt.verifyer().verify(password.getBytes(), account.get().getPassword().getBytes());
     return verifyResult.verified;
   }
+
+  public static boolean exists(String email) {
+    Optional<Account> account = accountDAO.findByEmail(email);
+    return account.isPresent();
+  }
 }
