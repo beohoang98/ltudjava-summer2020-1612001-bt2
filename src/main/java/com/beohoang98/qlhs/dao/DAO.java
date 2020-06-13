@@ -38,8 +38,9 @@ public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
   }
 
   @Override
-  public Optional<T> findOne(ID o) {
-    throw new UnsupportedOperationException();
+  public Optional<T> findOne(ID id) {
+    T object = session.get(classType, id);
+    return Optional.of(object);
   }
 
   @Override
