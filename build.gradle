@@ -12,6 +12,7 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application.
     id 'application'
+    id 'jacoco'
 }
 
 repositories {
@@ -41,6 +42,10 @@ dependencies {
     implementation 'com.github.javafaker:javafaker:1.0.2'
 
     implementation 'com.opencsv:opencsv:5.2'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.4"
+
+    // UI
+    implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1_pre-release_6.1'
 
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'
@@ -52,4 +57,16 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClassName = 'com.beohoang98.qlhs.App'
+}
+
+test {
+    exclude "com.beohoang98.qlhs.ui.*"
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
+    dependsOn test // tests are required to run before generating the report
 }

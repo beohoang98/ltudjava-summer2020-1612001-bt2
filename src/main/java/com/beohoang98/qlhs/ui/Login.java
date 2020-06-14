@@ -1,12 +1,8 @@
 package com.beohoang98.qlhs.ui;
 
 import com.beohoang98.qlhs.services.AuthService;
-import com.beohoang98.qlhs.ui.components.PasswordField;
-import com.beohoang98.qlhs.ui.components.TextField;
 import com.beohoang98.qlhs.ui.styles.AppColor;
 import com.beohoang98.qlhs.ui.styles.Margin;
-
-import org.apache.commons.validator.routines.EmailValidator;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -29,12 +25,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class Login extends JFrame implements ActionListener {
   static String title = "Login";
   JLabel titleLabel;
-  TextField userField;
-  PasswordField passField;
+  JTextField userField;
+  JPasswordField passField;
   JButton submitButton;
   JLabel errorLabel;
 
@@ -62,24 +60,17 @@ public class Login extends JFrame implements ActionListener {
   }
 
   void createView() {
-    titleLabel = new WhiteLabel(title);
+    titleLabel = new JLabel(title);
     titleLabel.setFont(new Font("Ubuntu", Font.BOLD, 36));
     titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-    userField = new TextField();
-    userField.setSize(0, Margin.x2);
-    userField.setBorderRadius(Margin.x1);
+    userField = new JTextField();
     userField.addActionListener(this);
 
-    passField = new PasswordField();
-    passField.setSize(0, Margin.x2);
-    passField.setBorderRadius(Margin.x1);
+    passField = new JPasswordField();
     passField.addActionListener(this);
 
     submitButton = new JButton(title);
-    submitButton.setBorder(BorderFactory.createEmptyBorder());
-    submitButton.setBackground(AppColor.PRIMARY);
-    submitButton.setForeground(Color.WHITE);
     submitButton.addActionListener(this);
 
     errorLabel = new JLabel();
@@ -90,16 +81,11 @@ public class Login extends JFrame implements ActionListener {
     formPanel = new JPanel();
     formPanel.setOpaque(false);
     formPanel.setLayout(new GridLayout(0, 1, Margin.x0, Margin.x1));
-    //    formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-
-    formPanel.setBorder(
-        BorderFactory.createEmptyBorder(Margin.x2, Margin.x2, Margin.x2, Margin.x2));
-    ;
 
     formPanel.add(titleLabel);
-    formPanel.add(new WhiteLabel("Username"));
+    formPanel.add(new JLabel("Username"));
     formPanel.add(userField);
-    formPanel.add(new WhiteLabel("Password"));
+    formPanel.add(new JLabel("Password"));
     formPanel.add(passField);
     formPanel.add(Box.createRigidArea(new Dimension(0, Margin.x2)));
     formPanel.add(submitButton);
@@ -144,9 +130,6 @@ public class Login extends JFrame implements ActionListener {
     if (pass.trim().length() == 0) {
       return "password is empty";
     }
-    if (!EmailValidator.getInstance().isValid(username)) {
-      return "email invalid";
-    }
     return null;
   }
 
@@ -154,6 +137,10 @@ public class Login extends JFrame implements ActionListener {
     String username = userField.getText();
     String pass = new String(passField.getPassword());
     return AuthService.verify(username, pass);
+  }
+
+  public interface LoginSuccess {
+    void onLoginSuccess();
   }
 
   public static class GradientFormPanel extends JPanel {
@@ -178,9 +165,5 @@ public class Login extends JFrame implements ActionListener {
       super(text);
       setForeground(Color.WHITE);
     }
-  }
-
-  public interface LoginSuccess {
-    void onLoginSuccess();
   }
 }

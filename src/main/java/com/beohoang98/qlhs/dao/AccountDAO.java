@@ -19,12 +19,12 @@ public class AccountDAO extends DAO<Account, Long> {
     return Optional.of(session.get(Account.class, id));
   }
 
-  public Optional<Account> findByEmail(@NotNull String email) {
+  public Optional<Account> findByUsername(@NotNull String username) {
     try {
       Account account =
           session
-              .createQuery("SELECT a FROM Account a WHERE email = :email", Account.class)
-              .setParameter("email", email)
+              .createQuery("SELECT a FROM Account a WHERE username = :username", Account.class)
+              .setParameter("username", username)
               .getSingleResult();
       return Optional.of(account);
     } catch (NoResultException exception) {

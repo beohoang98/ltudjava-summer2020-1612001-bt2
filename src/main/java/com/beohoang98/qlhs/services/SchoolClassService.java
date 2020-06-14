@@ -28,7 +28,7 @@ public class SchoolClassService {
     return schoolClass;
   }
 
-  public static void addStudents(@NotNull String classCode, List<StudentDto> list) {
+  public static boolean addStudents(@NotNull String classCode, List<StudentDto> list) {
     List<Student> students =
         list.stream()
             .map(
@@ -41,6 +41,6 @@ public class SchoolClassService {
                   return student;
                 })
             .collect(Collectors.toList());
-    schoolClassDAO.addStudents(classCode, students);
+    return schoolClassDAO.addStudents(classCode, students);
   }
 }

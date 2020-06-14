@@ -24,7 +24,7 @@ public class AuthService {
   @NotNull
   public static Account create(String email, String password) {
     Account account = new Account();
-    account.setEmail(email);
+    account.setUsername(email);
     account.setPassword(password);
     Long id = accountDAO.save(account);
     account.setId(id);
@@ -32,7 +32,7 @@ public class AuthService {
   }
 
   public static boolean verify(String email, String password) {
-    Optional<Account> account = accountDAO.findByEmail(email);
+    Optional<Account> account = accountDAO.findByUsername(email);
     if (!account.isPresent()) {
       return false;
     }
@@ -42,7 +42,7 @@ public class AuthService {
   }
 
   public static boolean exists(String email) {
-    Optional<Account> account = accountDAO.findByEmail(email);
+    Optional<Account> account = accountDAO.findByUsername(email);
     return account.isPresent();
   }
 }

@@ -2,6 +2,7 @@ package com.beohoang98.qlhs.service;
 
 import com.beohoang98.qlhs.mapping.StudentDto;
 import com.beohoang98.qlhs.services.StudentService;
+import com.opencsv.exceptions.CsvException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class StudentServiceTest {
   @Test
-  public void testImportCSV() throws IOException, URISyntaxException {
+  public void testImportCSV() throws IOException, URISyntaxException, CsvException {
     URL url = getClass().getClassLoader().getResource("16CTN.csv");
     assert url != null;
 

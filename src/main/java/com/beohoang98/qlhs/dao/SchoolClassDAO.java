@@ -14,30 +14,21 @@ public class SchoolClassDAO extends DAO<SchoolClass, String> {
     super(SchoolClass.class);
   }
 
-  public boolean addStudent(String classCode, Student student) {
-    Optional<SchoolClass> schoolClassOptional = findOne(classCode);
-    if (!schoolClassOptional.isPresent()) {
-      return false;
-    }
-    SchoolClass schoolClass = schoolClassOptional.get();
-    student.setSchoolClass(schoolClass);
-
-    Transaction transaction = session.beginTransaction();
-    session.save(student);
-    transaction.commit();
-    return true;
-  }
-
   public boolean addStudents(String classCode, List<Student> students) {
     Optional<SchoolClass> schoolClassOptional = findOne(classCode);
+    SchoolClass schoolClass;
     if (!schoolClassOptional.isPresent()) {
-      return false;
+      schoolClass = new SchoolClass();
+      schoolClass.setCode(classCode);
+      save(schoolClass);
+    } else {
+      schoolClass = schoolClassOptional.get();
     }
 
     Transaction t = session.beginTransaction();
     students.forEach(
         student -> {
-          student.setSchoolClass(schoolClassOptional.get());
+          student.setSchoolClass(schoolClass);
           session.saveOrUpdate(student);
         });
     t.commit();
