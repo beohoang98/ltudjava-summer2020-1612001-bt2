@@ -28,7 +28,7 @@ public class SchoolClassService {
     return schoolClass;
   }
 
-  public static boolean addStudents(@NotNull String classCode, List<StudentDto> list) {
+  public static boolean addStudents(@NotNull String classCode, @NotNull List<StudentDto> list) {
     List<Student> students =
         list.stream()
             .map(
@@ -42,5 +42,12 @@ public class SchoolClassService {
                 })
             .collect(Collectors.toList());
     return schoolClassDAO.addStudents(classCode, students);
+  }
+
+  public static List<SchoolClass> findAll(boolean withCount) {
+    if (withCount) {
+      return schoolClassDAO.findAllWithStudentCount();
+    }
+    return schoolClassDAO.findAll();
   }
 }

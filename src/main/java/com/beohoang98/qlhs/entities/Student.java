@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,7 +22,8 @@ public class Student {
   @Enumerated(EnumType.ORDINAL)
   private Gender gender;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, targetEntity = SchoolClass.class)
+  @JoinColumn(name = "class_code")
   private SchoolClass schoolClass;
 
   @ManyToMany private List<ClassCourse> courses;

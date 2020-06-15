@@ -38,4 +38,8 @@ public class StudentService {
   public static List<Student> findAll(int offset, int limit) {
     return studentDAO.findAll(offset, limit);
   }
+
+  public static List<Student> findByClass(String classCode) {
+    return studentDAO.findByClass(classCode);
+  }
 }

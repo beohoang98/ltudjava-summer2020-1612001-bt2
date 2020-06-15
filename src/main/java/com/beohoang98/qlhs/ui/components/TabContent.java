@@ -2,9 +2,9 @@ package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.ui.state.TabState;
 import com.beohoang98.qlhs.ui.tabs.AvailableTabs;
+import com.beohoang98.qlhs.ui.tabs.ClassDetails;
+import com.beohoang98.qlhs.ui.tabs.ClassList;
 import com.beohoang98.qlhs.ui.tabs.StudentMain;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +24,34 @@ public class TabContent extends JTabbedPane implements AncestorListener {
     tabListener = TabState.currentTabObserver.subscribe(this::handleChangeOrAddTab);
   }
 
-  void handleChangeOrAddTab(@NotNull String tabName) {
+  void handleChangeOrAddTab(TabState.TabContext context) {
+    String tabName = context.tab;
+    String[] args = context.args;
     try {
       AvailableTabs tab = AvailableTabs.valueOf(tabName.toUpperCase());
+      System.out.println("Selected: " + tab);
       if (tabIndex.contains(tab)) {
         setSelectedIndex(tabIndex.indexOf(tab));
         return;
       }
       tabIndex.add(tab);
+      //      setSelectedIndex(tabIndex.indexOf(tab));
+
       switch (tab) {
         case STUDENT:
           addTab(tabName, new StudentMain());
           break;
+        case CLASS:
+          {
+            ClassList classListTab = new ClassList();
+            addTab(tabName, classListTab);
+            break;
+          }
+        case CLASS_DETAILS:
+          {
+            addTab(tabName, new ClassDetails(args[0]));
+            break;
+          }
         case COURSE:
         default:
           break;

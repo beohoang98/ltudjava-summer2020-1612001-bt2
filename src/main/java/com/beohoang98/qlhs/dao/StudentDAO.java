@@ -22,9 +22,9 @@ public class StudentDAO extends DAO<Student, Integer> {
   }
 
   public List<Student> findAll(int offset, int limit) {
-    return (List<Student>)
+    return
         session
-            .createQuery("FROM Student")
+            .createQuery("FROM Student", Student.class)
             .setMaxResults(limit)
             .setFirstResult(offset)
             .getResultList();
@@ -32,5 +32,12 @@ public class StudentDAO extends DAO<Student, Integer> {
 
   public List<Student> findAll(int offset) {
     return this.findAll(offset, 50);
+  }
+
+  public List<Student> findByClass(String classCode) {
+    return session
+        .createQuery("FROM Student WHERE class_code = :classCode", Student.class)
+        .setParameter("classCode", classCode)
+        .getResultList();
   }
 }

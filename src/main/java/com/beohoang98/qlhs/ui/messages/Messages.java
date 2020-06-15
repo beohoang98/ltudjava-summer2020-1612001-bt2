@@ -15,6 +15,17 @@ public class Messages {
 
   public static class SchoolClass {
     public static String CODE = "Mã lớp";
+    public static String STUDENT_NUMBER = "Số sinh viên";
+  }
+
+  public static class Student {
+    public static String MSSV = "MSSV";
+    public static String NAME = "Họ và tên";
+    public static String GENDER = "Giới tính";
+    public static String CMND = "CMND";
+    public static String GK = "Điểm giữa kì";
+    public static String CK = "Điểm cuối kì";
+    public static String AVERAGE_PTS = "Điểm trung bình";
   }
 
   public static class Errors {

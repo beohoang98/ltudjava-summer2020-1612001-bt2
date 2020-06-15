@@ -7,18 +7,18 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 
 public class TabState {
-  public static final Subject<String> currentTabObserver = PublishSubject.create();
+  public static final Subject<TabContext> currentTabObserver = PublishSubject.create();
   static Set<String> tabNames = new TreeSet<>();
   static String currentTab;
 
-  public static void setCurrentTab(String name) {
+  public static void setCurrentTab(String name, String ...args) {
     currentTab = name;
-    currentTabObserver.onNext(name);
+    currentTabObserver.onNext(new TabContext(name, args));
   }
 
-  public static void addTab(String name) {
+  public static void addTab(String name, String ...args) {
     tabNames.add(name);
-    setCurrentTab(name);
+    setCurrentTab(name, args);
   }
 
   public static void removeTab(String name) {
@@ -26,6 +26,16 @@ public class TabState {
       if (tabNames.size() > 0) {
         setCurrentTab(tabNames.iterator().next());
       }
+    }
+  }
+
+  public static class TabContext {
+    public String tab;
+    public String[] args;
+
+    public TabContext(String tab, String ...args) {
+      this.tab = tab;
+      this.args = args;
     }
   }
 }

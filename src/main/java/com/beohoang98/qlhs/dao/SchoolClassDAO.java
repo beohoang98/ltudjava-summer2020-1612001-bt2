@@ -6,8 +6,10 @@ import com.beohoang98.qlhs.entities.Student;
 import org.hibernate.Transaction;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SchoolClassDAO extends DAO<SchoolClass, String> {
   public SchoolClassDAO() throws IOException {
@@ -33,5 +35,20 @@ public class SchoolClassDAO extends DAO<SchoolClass, String> {
         });
     t.commit();
     return true;
+  }
+
+  public List<SchoolClass> findAllWithStudentCount() {
+    List<Object[]> results =
+        session
+            .createSQLQuery(
+                "SELECT c.code, count(s.mssv) FROM \"class\" c JOIN \"student\" s ON s.class_code = c.code GROUP BY c.code")
+            .getResultList();
+
+    List<SchoolClass> mapped =
+        results.stream()
+            .map(objects -> new SchoolClass((String) objects[0], (BigInteger) objects[1]))
+            .collect(Collectors.toList());
+
+    return mapped;
   }
 }
