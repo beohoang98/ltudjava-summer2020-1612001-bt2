@@ -5,6 +5,7 @@ public class Messages {
     public static String CANCEL = "Hủy";
     public static String OK = "Đồng ý";
     public static String IMPORT = "Import";
+    public static String ADD = "Thêm";
   }
 
   public static class Objects {
@@ -40,5 +41,6 @@ public class Messages {
   public static class Others {
     public static String OVERWRITE_VALUE_IF_EXIST = "Ghi đè dữ liệu (nếu có)";
     public static String IMPORT_FORM_TITLE = "Import dữ liệu";
+    public static String LOADING = "Đang tải ...";
   }
 }
