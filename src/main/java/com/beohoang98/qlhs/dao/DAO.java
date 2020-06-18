@@ -28,8 +28,11 @@ interface DAOInterface<T, ID extends Serializable> {
 
 public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
   protected SessionFactory sessionFactory = HBUtils.getSessionFactory();
-
-  @PersistenceContext protected Session session = sessionFactory.openSession();
+  /**
+   * for read only, if want to write, create manual
+   */
+  @PersistenceContext
+  protected Session session = sessionFactory.openSession();
 
   protected Class<T> classType;
 
@@ -50,23 +53,29 @@ public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
 
   @Override
   public ID save(@NotNull T entity) {
-    Transaction t = session.beginTransaction();
-    ID identifier = (ID) session.save(entity);
+    Session writeSession = sessionFactory.openSession();
+    Transaction t = writeSession.beginTransaction();
+    ID identifier = (ID) writeSession.save(entity);
     t.commit();
+    writeSession.close();
     return identifier;
   }
 
   @Override
   public void update(@NotNull T entity) {
-    Transaction t = session.beginTransaction();
-    session.update(entity);
+    Session writeSession = sessionFactory.openSession();
+    Transaction t = writeSession.beginTransaction();
+    writeSession.update(entity);
     t.commit();
+    writeSession.close();
   }
 
   @Override
   public void delete(@NotNull T entity) {
-    Transaction t = session.beginTransaction();
-    session.remove(entity);
+    Session writeSession = sessionFactory.openSession();
+    Transaction t = writeSession.beginTransaction();
+    writeSession.remove(entity);
     t.commit();
+    writeSession.close();
   }
 }

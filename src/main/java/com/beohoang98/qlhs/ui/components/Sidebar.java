@@ -3,7 +3,9 @@ package com.beohoang98.qlhs.ui.components;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,7 +25,18 @@ public class Sidebar extends JPanel implements ActionListener {
 
   void makeUI() {
     setBorder(BorderFactory.createEmptyBorder());
-    setLayout(new GridLayout(0, 1));
+    setLayout(new BorderLayout());
+    setBorder(BorderFactory.createEmptyBorder());
+
+    JPanel content = new JPanel();
+    content.setLayout(new GridBagLayout());
+    add(content, BorderLayout.NORTH);
+
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.weightx = 1;
+    gbc.fill = GridBagConstraints.BOTH;
+    gbc.anchor = GridBagConstraints.NORTH;
 
     studentBtn.setActionCommand("open:student");
     studentBtn.addActionListener(this);
@@ -32,9 +45,14 @@ public class Sidebar extends JPanel implements ActionListener {
     courseBtn.setActionCommand("open:course");
     courseBtn.addActionListener(this);
 
-    add(studentBtn);
-    add(classBtn);
-    add(courseBtn);
+    gbc.gridy = 0;
+    content.add(studentBtn, gbc);
+
+    gbc.gridy = 1;
+    content.add(classBtn, gbc);
+
+    gbc.gridy = 2;
+    content.add(courseBtn, gbc);
   }
 
   @Override

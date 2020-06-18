@@ -1,6 +1,21 @@
 package com.beohoang98.qlhs.ui.messages;
 
+import com.beohoang98.qlhs.utils.UTF8Control;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class Messages {
+  static ResourceBundle bundle =
+      ResourceBundle.getBundle("locale", new Locale("vi"), new UTF8Control());
+
+  @NotNull
+  public static String t(String name) {
+    return bundle.getString(name);
+  }
+
   public static class Button {
     public static String CANCEL = "Hủy";
     public static String OK = "Đồng ý";
@@ -27,6 +42,12 @@ public class Messages {
     public static String GK = "Điểm giữa kì";
     public static String CK = "Điểm cuối kì";
     public static String AVERAGE_PTS = "Điểm trung bình";
+  }
+
+  public static class Course {
+    public static String code = "Mã môn học";
+    public static String name = "Tên môn học";
+    public static String room = "Phòng học";
   }
 
   public static class Errors {
