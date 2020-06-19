@@ -1,6 +1,8 @@
 package com.beohoang98.qlhs.ui.components;
 
+import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
+import com.beohoang98.qlhs.ui.styles.Margin;
 import com.beohoang98.qlhs.ui.tabs.AvailableTabs;
 import com.beohoang98.qlhs.ui.tabs.ClassDetails;
 import com.beohoang98.qlhs.ui.tabs.ClassList;
@@ -10,13 +12,21 @@ import com.beohoang98.qlhs.ui.tabs.StudentMain;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
@@ -24,7 +34,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 
 public class TabContent extends JTabbedPane implements AncestorListener {
   Disposable tabListener;
-  Map<AvailableTabs, JComponent> tabIndex = new HashMap<>();
+  Map<AvailableTabs, JComponent> tabComponents = new HashMap<>();
+  List<AvailableTabs> tabIndex = new ArrayList<>();
 
   public TabContent() {
     super();
@@ -37,8 +48,8 @@ public class TabContent extends JTabbedPane implements AncestorListener {
     try {
       AvailableTabs tab = AvailableTabs.valueOf(tabName.toUpperCase());
       System.out.println("Selected: " + tab);
-      if (tabIndex.containsKey(tab)) {
-        setSelectedIndex(getComponentZOrder(tabIndex.get(tab)));
+      if (tabComponents.containsKey(tab)) {
+        setSelectedIndex(tabIndex.indexOf(tab));
         return;
       }
       JComponent component = new JLabel("Empty", SwingConstants.CENTER);
@@ -56,15 +67,20 @@ public class TabContent extends JTabbedPane implements AncestorListener {
         case COURSE:
           component = new CourseList();
           break;
-        case CLASS_COURSE:
+        case COURSE_DETAILS:
           component = new CourseDetails(args[0]);
           break;
         default:
           break;
       }
 
-      tabIndex.put(tab, component);
+      tabComponents.put(tab, component);
+      tabIndex.add(tab);
       addTab(tabName, component);
+
+      int index = tabIndex.size() - 1;
+      setTabComponentAt(index, new ClosableButton(tabName, tab));
+      setSelectedIndex(index);
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
     }
@@ -82,4 +98,24 @@ public class TabContent extends JTabbedPane implements AncestorListener {
 
   @Override
   public void ancestorMoved(AncestorEvent ancestorEvent) {}
+
+  public class ClosableButton extends JPanel {
+    public ClosableButton(String title, AvailableTabs tab) {
+      super();
+      JLabel label = new JLabel(Messages.t("tab." + title), CENTER);
+      add(label, BorderLayout.CENTER);
+
+      Icon icon = UIManager.getIcon("InternalFrame.closeIcon");
+      JButton closeBtn = new JButton(icon);
+      closeBtn.setPreferredSize(new Dimension(Margin.x1, Margin.x1));
+      add(closeBtn, BorderLayout.LINE_END);
+
+      closeBtn.addActionListener(
+          actionEvent -> {
+            removeTabAt(tabIndex.indexOf(tab));
+            tabIndex.remove(tab);
+            tabComponents.remove(tab);
+          });
+    }
+  }
 }

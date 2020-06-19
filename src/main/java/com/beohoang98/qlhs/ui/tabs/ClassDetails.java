@@ -1,7 +1,10 @@
 package com.beohoang98.qlhs.ui.tabs;
 
+import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.entities.Student;
+import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.services.StudentService;
+import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
 
@@ -11,7 +14,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,9 +37,8 @@ public class ClassDetails extends JPanel implements AncestorListener {
   Disposable disposable;
 
   //  JPanel controlPanel = new JPanel();
-  JTable coursesTable = new JTable();
+  DataTable<Course> courseTable;
   JTable studentTable = new JTable();
-  JScrollPane coursesWrapper = new JScrollPane();
   JScrollPane studentsWrapper = new JScrollPane();
 
   public ClassDetails(String classCode) {
@@ -55,16 +59,18 @@ public class ClassDetails extends JPanel implements AncestorListener {
     add(controlPanel, BorderLayout.NORTH);
     add(contentPanel, BorderLayout.CENTER);
 
+    Map<String, String> courseColumns = new LinkedHashMap<>();
+    courseColumns.put(Messages.t("course.code"), "code");
+    courseColumns.put(Messages.t("course.name"), "name");
+    courseTable = new DataTable<>(courseColumns);
+
     contentPanel.setLayout(new GridLayout(1, 2));
-    contentPanel.add(coursesWrapper);
+    contentPanel.add(courseTable);
     contentPanel.add(studentsWrapper);
 
-    coursesTable.setFillsViewportHeight(true);
-    coursesTable.setAutoCreateRowSorter(true);
     studentTable.setFillsViewportHeight(true);
     studentTable.setAutoCreateRowSorter(true);
 
-    coursesWrapper.setViewportView(createLoadingLabel());
     studentsWrapper.setViewportView(createLoadingLabel());
   }
 
@@ -95,7 +101,14 @@ public class ClassDetails extends JPanel implements AncestorListener {
     loadStudents();
   }
 
-  void loadCourses() {}
+  void loadCourses() {
+    courseTable.setLoading(true);
+    Single.fromCallable(() -> CourseService.getByClass(this.classCode))
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.single())
+        .doFinally(() -> courseTable.setLoading(false))
+        .subscribe(courseTable::setData, this::showError);
+  }
 
   void loadStudents() {
     Single.fromCallable(() -> StudentService.findByClass(this.classCode))
@@ -126,8 +139,9 @@ public class ClassDetails extends JPanel implements AncestorListener {
   }
 
   void showError(@NotNull Throwable throwable) {
-    // TODO: handle message
-    JOptionPane.showMessageDialog(this, "Error", throwable.getMessage(), JOptionPane.ERROR_MESSAGE);
+    throwable.printStackTrace();
+    JOptionPane.showMessageDialog(
+        this, Messages.t("error_title"), throwable.getMessage(), JOptionPane.ERROR_MESSAGE);
   }
 
   @Override

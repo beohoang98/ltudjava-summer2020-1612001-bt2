@@ -5,6 +5,7 @@ import com.beohoang98.qlhs.utils.UTF8Control;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
@@ -13,7 +14,12 @@ public class Messages {
 
   @NotNull
   public static String t(String name) {
-    return bundle.getString(name);
+    try {
+      return bundle.getString(name);
+    } catch (NullPointerException | MissingResourceException e) {
+      e.fillInStackTrace();
+      return name;
+    }
   }
 
   public static class Button {

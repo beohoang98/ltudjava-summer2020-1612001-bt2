@@ -1,7 +1,9 @@
 package com.beohoang98.qlhs.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,22 +13,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity()
 @Table(name = "student")
 public class Student {
   @Id private Integer mssv;
-  private String name;
+
+  @NotBlank private String name;
+
+  @Column(nullable = false)
+  @NotBlank
   private String cmnd;
 
   @Enumerated(EnumType.ORDINAL)
+  @Column(nullable = false)
+  @NotBlank
   private Gender gender;
 
   @ManyToOne(fetch = FetchType.EAGER, targetEntity = SchoolClass.class)
   @JoinColumn(name = "class_code")
   private SchoolClass schoolClass;
 
-  @ManyToMany private List<ClassCourse> courses;
+  @ManyToMany(mappedBy = "students")
+  private Set<Course> courses = new HashSet<>();
 
   public Integer getMSSV() {
     return mssv;
@@ -68,11 +78,7 @@ public class Student {
     this.schoolClass = schoolClass;
   }
 
-  public List<ClassCourse> getCourses() {
+  public Set<Course> getCourses() {
     return courses;
-  }
-
-  public void setCourses(List<ClassCourse> courses) {
-    this.courses = courses;
   }
 }

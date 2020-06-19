@@ -47,7 +47,7 @@ public class Home extends JFrame implements ActionListener, ItemListener {
 
   public Home() {
     super(title);
-    setPreferredSize(new Dimension(800, 600));
+    setPreferredSize(new Dimension(1280, 720));
     makeUI();
 
     setDefaultCloseOperation(EXIT_ON_CLOSE);

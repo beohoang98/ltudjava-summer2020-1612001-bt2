@@ -4,18 +4,18 @@ import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.services.SchoolClassService;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
-import com.beohoang98.qlhs.ui.styles.Margin;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,11 +52,13 @@ public class ClassList extends JPanel implements AncestorListener {
     table.setFillsViewportHeight(true);
     table.setAutoCreateRowSorter(true);
 
-    JLabel filterLabel = new JLabel("Filter"); // TODO: handle messages
+    JLabel filterLabel = new JLabel(Messages.t("filter_label"));
     JTextField filterNameField = new JTextField();
-    formControl.setLayout(new FlowLayout(FlowLayout.LEFT, Margin.x1, Margin.x1));
+    JButton reload = new JButton(Messages.t("button.reload"));
+    formControl.setLayout(new BoxLayout(formControl, BoxLayout.X_AXIS));
     formControl.add(filterLabel);
     formControl.add(filterNameField);
+    formControl.add(reload);
   }
 
   public void loadData() {

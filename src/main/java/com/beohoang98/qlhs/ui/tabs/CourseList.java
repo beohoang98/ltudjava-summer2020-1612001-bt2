@@ -5,6 +5,10 @@ import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.dialog.AddCourse;
 import com.beohoang98.qlhs.ui.messages.Messages;
+import com.beohoang98.qlhs.ui.state.TabState;
+import com.beohoang98.qlhs.utils.Popup;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,7 +19,6 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -27,7 +30,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class CourseList extends JPanel implements AncestorListener {
   JButton addCourseBtn = new JButton(Messages.Button.ADD);
   DataTable<Course> courseDataTable;
+  String currentSelectionCode = null;
   Disposable loadDataState = Disposable.empty();
+  Disposable watchSelection = Disposable.empty();
 
   public CourseList() {
     super();
@@ -42,8 +47,9 @@ public class CourseList extends JPanel implements AncestorListener {
     Map<String, String> columns = new LinkedHashMap<>(); // LinkedHashMap for
     // ordered insert key
     columns.put(Messages.t("course.code"), "code");
-    columns.put(Messages.t("course.name"), "code");
-    courseDataTable = new DataTable<>(Course.class, columns);
+    columns.put(Messages.t("course.name"), "name");
+    courseDataTable = new DataTable<>(columns);
+    watchSelection = courseDataTable.currentSelection.subscribe(this::onRowSelect);
 
     JPanel control = new JPanel();
     control.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -58,10 +64,10 @@ public class CourseList extends JPanel implements AncestorListener {
     courseDataTable.setLoading(true);
     loadDataState =
         Single.fromCallable(CourseService::getAllCourses)
-              .subscribeOn(Schedulers.io())
-              .observeOn(Schedulers.single())
-              .doFinally(() -> courseDataTable.setLoading(false))
-              .subscribe(this::fillDataToTable, this::showError);
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.single())
+            .doFinally(() -> courseDataTable.setLoading(false))
+            .subscribe(this::fillDataToTable, this::showError);
   }
 
   void fillDataToTable(List<Course> courses) {
@@ -69,23 +75,29 @@ public class CourseList extends JPanel implements AncestorListener {
   }
 
   void showError(Throwable throwable) {
+    Popup.on(this).error(throwable);
   }
 
   void onAddClick(ActionEvent actionEvent) {
-    JDialog addDialog = new AddCourse(this);
+    AddCourse addDialog = new AddCourse(this);
     addDialog.setVisible(true);
+    addDialog.setAddHandler(courseDataTable::addData);
+  }
+
+  void onRowSelect(@NotNull Object[] cells) {
+    String code = (String) cells[0];
+    TabState.addTab("course_details", code);
   }
 
   @Override
-  public void ancestorAdded(AncestorEvent ancestorEvent) {
-  }
+  public void ancestorAdded(AncestorEvent ancestorEvent) {}
 
   @Override
-  public void ancestorMoved(AncestorEvent ancestorEvent) {
-  }
+  public void ancestorMoved(AncestorEvent ancestorEvent) {}
 
   @Override
   public void ancestorRemoved(AncestorEvent ancestorEvent) {
     loadDataState.dispose();
+    watchSelection.dispose();
   }
 }

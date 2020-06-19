@@ -5,10 +5,14 @@ import com.beohoang98.qlhs.ui.messages.Messages;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,17 +21,18 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import io.reactivex.rxjava3.subjects.PublishSubject;
+
 public class DataTable<T> extends JScrollPane {
   private final Map<String, String> columns;
-  private final Class<T> tClass;
+  public final PublishSubject<Object[]> currentSelection = PublishSubject.create();
   private JTable table;
   private boolean isLoading = false;
   private JLabel loadingLabel;
 
-  public DataTable(Class<T> tClass, @NotNull Map<String, String> columns) {
+  public DataTable(@NotNull Map<String, String> columns) {
     super();
     this.columns = columns;
-    this.tClass = tClass;
     initComponents();
   }
 
@@ -35,10 +40,19 @@ public class DataTable<T> extends JScrollPane {
     table = new JTable();
     table.setFillsViewportHeight(true);
     table.setAutoCreateRowSorter(true);
-    loadingLabel =
-        new JLabel(
-            Messages.Others.LOADING, new ImageIcon("ajax-loader.gif"),
-            SwingConstants.CENTER);
+    table.addMouseListener(
+        new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent mouseEvent) {
+            onSelect(mouseEvent);
+          }
+        });
+
+    ImageIcon icon =
+        new ImageIcon(
+            Objects.requireNonNull(getClass().getClassLoader().getResource("ajax-loader.gif")));
+    loadingLabel = new JLabel(Messages.t("loading"), icon, SwingConstants.CENTER);
+    loadingLabel.setForeground(Color.BLACK);
     setViewportView(table);
   }
 
@@ -71,6 +85,26 @@ public class DataTable<T> extends JScrollPane {
     this.table.setModel(model);
   }
 
+  public void addData(T item) {
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    List<Object> cells = new ArrayList<>();
+    columns
+        .values()
+        .forEach(
+            column -> {
+              try {
+                Map<String, Object> props = PropertyUtils.describe(item);
+                cells.add(props.get(column));
+              } catch (IllegalAccessException noSuchFieldException) {
+                noSuchFieldException.printStackTrace();
+                System.out.print(item);
+              } catch (NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+              }
+            });
+    model.addRow(cells.toArray());
+  }
+
   public boolean isLoading() {
     return isLoading;
   }
@@ -81,6 +115,17 @@ public class DataTable<T> extends JScrollPane {
       setViewportView(loadingLabel);
     } else {
       setViewportView(table);
+    }
+  }
+
+  void onSelect(@NotNull MouseEvent mouseEvent) {
+    int rowIdx = table.rowAtPoint(mouseEvent.getPoint());
+    if (rowIdx >= 0) {
+      List<Object> cells = new ArrayList<>();
+      for (int cellIdx = 0; cellIdx < columns.size(); ++cellIdx) {
+        cells.add(table.getValueAt(rowIdx, cellIdx));
+      }
+      currentSelection.onNext(cells.toArray());
     }
   }
 }
