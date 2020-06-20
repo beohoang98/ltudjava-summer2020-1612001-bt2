@@ -2,6 +2,7 @@ package com.beohoang98.qlhs.ui;
 
 import com.beohoang98.qlhs.ui.components.Sidebar;
 import com.beohoang98.qlhs.ui.components.TabContent;
+import com.beohoang98.qlhs.ui.dialog.ImportCourseFromCSVDialog;
 import com.beohoang98.qlhs.ui.dialog.ImportPreview;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.styles.AppColor;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -116,27 +118,38 @@ public class Home extends JFrame implements ActionListener, ItemListener {
     main.addSeparator();
     main.add(mainExit);
 
-    JMenu studentMenu = new JMenu("Student");
-    JMenuItem importItem = new JMenuItem("Import from csv...");
-    importItem.setActionCommand("student:import");
-    importItem.addActionListener(this);
-    studentMenu.add(importItem);
+    JMenu importMenu = new JMenu(Messages.t("menu.import"));
+    JMenuItem studentItem = new JMenuItem(Messages.t("menu.import.students"));
+    studentItem.setActionCommand("student:import");
+    studentItem.addActionListener(this);
+    JMenuItem courseItem = new JMenuItem(Messages.t("menu.import.courses"));
+    courseItem.setActionCommand("course:import");
+    courseItem.addActionListener(this);
+
+    importMenu.add(studentItem);
+    importMenu.add(courseItem);
 
     menuBar.add(main);
-    menuBar.add(studentMenu);
+    menuBar.add(importMenu);
   }
 
   @Override
   public void actionPerformed(ActionEvent actionEvent) {
     String command = actionEvent.getActionCommand();
-    if (command.equals("exit")) {
-      dispose();
-    } else if (command.equals("student:import")) {
-      handleOpenFile();
+    switch (command) {
+      case "exit":
+        dispose();
+        break;
+      case "student:import":
+        handleImportStudent();
+        break;
+      case "course:import":
+        handleImportCourse();
+        break;
     }
   }
 
-  public void handleOpenFile() {
+  public void handleImportStudent() {
     final JFileChooser chooser = new JFileChooser();
     chooser.setCurrentDirectory(new File("."));
     chooser.setFileFilter(new FileNameExtensionFilter("CSV File", "csv"));
@@ -152,6 +165,18 @@ public class Home extends JFrame implements ActionListener, ItemListener {
       } catch (IOException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  void handleImportCourse() {
+    final JFileChooser chooser = new JFileChooser();
+    chooser.setCurrentDirectory(new File("."));
+    chooser.setFileFilter(new FileNameExtensionFilter("CSV File", "csv"));
+    int returnVal = chooser.showOpenDialog(this);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      File file = chooser.getSelectedFile();
+      JDialog importDialog = new ImportCourseFromCSVDialog(this, file);
+      importDialog.setVisible(true);
     }
   }
 
