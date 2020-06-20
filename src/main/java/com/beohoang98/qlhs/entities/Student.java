@@ -1,6 +1,7 @@
 package com.beohoang98.qlhs.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -37,6 +39,12 @@ public class Student {
 
   @ManyToMany(mappedBy = "students")
   private Set<Course> courses = new HashSet<>();
+
+  @OneToMany private List<ReCheckMark> reCheckMarkList;
+
+  public List<ReCheckMark> getReCheckMarkList() {
+    return reCheckMarkList;
+  }
 
   public Integer getMSSV() {
     return mssv;
