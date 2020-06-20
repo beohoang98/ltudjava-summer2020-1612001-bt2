@@ -7,50 +7,70 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "course")
 public class Course {
-  @Id private String code;
 
-  @Column(nullable = false)
-  @NotBlank
-  private String name;
+    @Id
+    @Column(name = "code")
+    private String code;
 
-  @ManyToMany(targetEntity = Student.class, cascade = { CascadeType.ALL })
-  @JoinTable(
-      name = "course_student",
-      joinColumns = { @JoinColumn(name = "course_code") },
-      inverseJoinColumns = { @JoinColumn(name = "student_mssv") }
-  )
-  private Set<Student> students = new HashSet<>();
+    @Column(nullable = false)
+    @NotBlank
+    private String name;
 
-  public String getCode() {
-    return code;
-  }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_code")
+    SchoolClass schoolClass;
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+    @ManyToMany(targetEntity = Student.class, cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "course_student",
+            joinColumns = {
+                @JoinColumn(name = "course_code")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "student_mssv")}
+    )
+    private Set<Student> students = new HashSet<>();
 
-  public String getName() {
-    return name;
-  }
+    public Course() {
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public Course(String code) {
+        this.code = code;
+    }
 
-  @Override
-  public String toString() {
-    return "Course{" + "code='" + code + '\'' + ", name='" + name + '\'' + '}';
-  }
+    public String getCode() {
+        return code;
+    }
 
-  public Set<Student> getStudents() {
-    return students;
-  }
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" + "code='" + code + '\'' + ", name='" + name + '\'' + '}';
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
 }

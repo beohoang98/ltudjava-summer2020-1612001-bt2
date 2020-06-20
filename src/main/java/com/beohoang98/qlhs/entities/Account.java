@@ -9,8 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "account")
 public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

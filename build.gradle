@@ -35,6 +35,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-validator:6.1.5.Final'
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation 'org.postgresql:postgresql:42.1.4'
+    implementation 'mysql:mysql-connector-java:5.1.6'
     implementation 'io.github.cdimascio:java-dotenv:5.2.1'
     // Swing
     implementation 'com.intellij:forms_rt:7.0.3'

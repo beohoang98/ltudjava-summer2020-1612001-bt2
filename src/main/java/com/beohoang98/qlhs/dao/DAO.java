@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.PersistenceContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 interface DAOInterface<T, ID extends Serializable> {
   Optional<T> findOne(ID id);
@@ -27,7 +29,8 @@ interface DAOInterface<T, ID extends Serializable> {
 }
 
 public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
-  protected SessionFactory sessionFactory = HBUtils.getSessionFactory();
+    private static Logger logger = LogManager.getLogger(DAO.class);
+  protected SessionFactory sessionFactory;
   /**
    * for read only, if want to write, create manual
    */
@@ -36,8 +39,13 @@ public class DAO<T, ID extends Serializable> implements DAOInterface<T, ID> {
 
   protected Class<T> classType;
 
-  public DAO(Class<T> classType) throws IOException {
+  public DAO(Class<T> classType) {
     this.classType = classType;
+      try {
+          sessionFactory = HBUtils.getSessionFactory();
+      } catch (Exception e) {
+          logger.error(e.getMessage(), e);
+      }
   }
 
   @Override
