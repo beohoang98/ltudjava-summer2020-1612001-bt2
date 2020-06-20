@@ -1,5 +1,5 @@
 # ltudjava-summer2020-1612001-bt2
-Student Management App written with Java Swing and Hibernate
+Student Management App written with Java Swing and [Hibernate](https://hibernate.org/orm/)
 
 ## Build
 
