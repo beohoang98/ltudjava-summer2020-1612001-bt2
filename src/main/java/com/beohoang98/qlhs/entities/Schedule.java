@@ -21,98 +21,96 @@ import javax.persistence.Table;
 @Table(name = "schedule")
 public class Schedule implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(name = "room")
-    String room;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_code")
-    Course course;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "class_code")
-    SchoolClass schoolClass;
+  @Column(name = "room")
+  String room;
 
-    public Schedule() {
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "course_code")
+  Course course;
+
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "class_code")
+  SchoolClass schoolClass;
+
+  public Schedule() {}
+
+  public Schedule(int id, String room, Course course, SchoolClass schoolClass) {
+    this.id = id;
+    this.room = room;
+    this.course = course;
+    this.schoolClass = schoolClass;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getRoom() {
+    return room;
+  }
+
+  public void setRoom(String room) {
+    this.room = room;
+  }
+
+  public Course getCourse() {
+    return course;
+  }
+
+  public void setCourse(Course course) {
+    this.course = course;
+  }
+
+  public SchoolClass getSchoolClass() {
+    return schoolClass;
+  }
+
+  public void setSchoolClass(SchoolClass schoolClass) {
+    this.schoolClass = schoolClass;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 19 * hash + this.id;
+    hash = 19 * hash + Objects.hashCode(this.room);
+    hash = 19 * hash + Objects.hashCode(this.course);
+    hash = 19 * hash + Objects.hashCode(this.schoolClass);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
-
-    public Schedule(int id, String room, Course course, SchoolClass schoolClass) {
-        this.id = id;
-        this.room = room;
-        this.course = course;
-        this.schoolClass = schoolClass;
+    if (obj == null) {
+      return false;
     }
-
-    public int getId() {
-        return id;
+    if (getClass() != obj.getClass()) {
+      return false;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    final Schedule other = (Schedule) obj;
+    if (this.id != other.id) {
+      return false;
     }
-
-    public String getRoom() {
-        return room;
+    if (!Objects.equals(this.room, other.room)) {
+      return false;
     }
-
-    public void setRoom(String room) {
-        this.room = room;
+    if (!Objects.equals(this.course, other.course)) {
+      return false;
     }
-
-    public Course getCourse() {
-        return course;
+    if (!Objects.equals(this.schoolClass, other.schoolClass)) {
+      return false;
     }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public SchoolClass getSchoolClass() {
-        return schoolClass;
-    }
-
-    public void setSchoolClass(SchoolClass schoolClass) {
-        this.schoolClass = schoolClass;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + this.id;
-        hash = 19 * hash + Objects.hashCode(this.room);
-        hash = 19 * hash + Objects.hashCode(this.course);
-        hash = 19 * hash + Objects.hashCode(this.schoolClass);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Schedule other = (Schedule) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.room, other.room)) {
-            return false;
-        }
-        if (!Objects.equals(this.course, other.course)) {
-            return false;
-        }
-        if (!Objects.equals(this.schoolClass, other.schoolClass)) {
-            return false;
-        }
-        return true;
-    }
-
+    return true;
+  }
 }

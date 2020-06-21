@@ -1,12 +1,9 @@
 package com.beohoang98.qlhs.utils;
 
 import com.beohoang98.qlhs.ui.messages.Messages;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.awt.Component;
-
 import javax.swing.JOptionPane;
+import org.jetbrains.annotations.NotNull;
 
 public class Popup {
   Component component;

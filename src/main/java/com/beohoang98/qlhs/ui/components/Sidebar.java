@@ -2,13 +2,11 @@ package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;

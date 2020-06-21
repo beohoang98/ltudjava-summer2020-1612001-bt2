@@ -2,13 +2,11 @@ package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.entities.Gender;
 import com.beohoang98.qlhs.entities.Student;
-
+import java.io.IOException;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Optional;
 
 public class StudentDaoTest {
   static StudentDAO studentDAO;

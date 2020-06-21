@@ -1,19 +1,16 @@
 package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.services.StudentService;
-
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class StudentTable extends JScrollPane {
   JTable table = new JTable();

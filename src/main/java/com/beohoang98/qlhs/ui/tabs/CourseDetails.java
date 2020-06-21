@@ -6,23 +6,20 @@ import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
 import com.beohoang98.qlhs.utils.Popup;
-
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CourseDetails extends JPanel implements AncestorListener {
   String courseCode;

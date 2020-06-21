@@ -9,16 +9,13 @@ import com.beohoang98.qlhs.ui.tabs.ClassList;
 import com.beohoang98.qlhs.ui.tabs.CourseDetails;
 import com.beohoang98.qlhs.ui.tabs.CourseList;
 import com.beohoang98.qlhs.ui.tabs.StudentMain;
-
-import org.jetbrains.annotations.NotNull;
-
+import io.reactivex.rxjava3.disposables.Disposable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,8 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
-import io.reactivex.rxjava3.disposables.Disposable;
+import org.jetbrains.annotations.NotNull;
 
 public class TabContent extends JTabbedPane implements AncestorListener {
   Disposable tabListener;

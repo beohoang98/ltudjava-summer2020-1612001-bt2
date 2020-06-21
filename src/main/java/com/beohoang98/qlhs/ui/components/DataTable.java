@@ -1,10 +1,7 @@
 package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.ui.messages.Messages;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.jetbrains.annotations.NotNull;
-
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,15 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.jetbrains.annotations.NotNull;
 
 public class DataTable<T> extends JScrollPane {
   private final Map<String, String> columns;

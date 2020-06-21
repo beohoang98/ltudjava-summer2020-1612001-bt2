@@ -1,12 +1,10 @@
 package com.beohoang98.qlhs.ui.messages;
 
 import com.beohoang98.qlhs.utils.UTF8Control;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import org.jetbrains.annotations.NotNull;
 
 public class Messages {
   static ResourceBundle bundle =

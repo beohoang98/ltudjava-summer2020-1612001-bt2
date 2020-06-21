@@ -3,14 +3,12 @@
  */
 package com.beohoang98.qlhs;
 
-import com.beohoang98.qlhs.utils.HBUtils;
+import static org.junit.Assert.assertTrue;
 
+import com.beohoang98.qlhs.utils.HBUtils;
+import java.io.IOException;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
-
-import java.io.IOException;
-
-import static org.junit.Assert.assertTrue;
 
 public class AppTest {
   @Test

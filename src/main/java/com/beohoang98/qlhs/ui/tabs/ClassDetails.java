@@ -7,9 +7,9 @@ import com.beohoang98.qlhs.services.StudentService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
-
-import org.jetbrains.annotations.NotNull;
-
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.net.URL;
@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,10 +26,7 @@ import javax.swing.JTable;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
-
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.jetbrains.annotations.NotNull;
 
 public class ClassDetails extends JPanel implements AncestorListener {
   String classCode;

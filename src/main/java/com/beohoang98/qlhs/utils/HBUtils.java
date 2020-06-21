@@ -6,16 +6,12 @@ import com.beohoang98.qlhs.entities.ClassCourse;
 import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
+import io.github.cdimascio.dotenv.Dotenv;
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.persistence.PersistenceContext;
-
-import io.github.cdimascio.dotenv.Dotenv;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class HBUtils {
   @PersistenceContext private static SessionFactory sessionFactory;

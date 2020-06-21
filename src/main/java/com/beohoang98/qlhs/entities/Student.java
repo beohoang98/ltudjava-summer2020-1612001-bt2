@@ -2,7 +2,6 @@ package com.beohoang98.qlhs.entities;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

@@ -1,8 +1,11 @@
 package com.beohoang98.qlhs.dao;
 
+import static org.junit.Assert.*;
+
 import com.beohoang98.qlhs.entities.Account;
 import com.beohoang98.qlhs.utils.HBUtils;
-
+import java.io.IOException;
+import java.util.Optional;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -12,18 +15,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runners.MethodSorters;
 
-import java.io.IOException;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
-
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AccountTest {
   static AccountDAO accountDAO;
 
-  @Rule
-  public ExpectedException thrown = ExpectedException.none();
+  @Rule public ExpectedException thrown = ExpectedException.none();
 
   @BeforeClass
   public static void up() throws IOException {
@@ -47,9 +43,7 @@ public class AccountTest {
     assertTrue(findAccount.isPresent());
   }
 
-  /**
-   * Don't run this test alone
-   */
+  /** Don't run this test alone */
   @Test
   public void _02_shouldThrowIfExist() {
     Account account = new Account();
