@@ -5,24 +5,13 @@ import com.beohoang98.qlhs.entities.Gender;
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.mapping.StudentDto;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
 
 public class SchoolClassService {
-  static SchoolClassDAO schoolClassDAO;
-
-  static {
-    try {
-      schoolClassDAO = new SchoolClassDAO();
-    } catch (IOException ioException) {
-      ioException.printStackTrace();
-    }
-  }
-
   public static @NotNull SchoolClass create(@NotNull SchoolClass schoolClass) {
-    schoolClassDAO.save(schoolClass);
+    SchoolClassDAO.instance.save(schoolClass);
     return schoolClass;
   }
 
@@ -39,13 +28,13 @@ public class SchoolClassService {
                   return student;
                 })
             .collect(Collectors.toList());
-    return schoolClassDAO.addStudents(classCode, students);
+    return SchoolClassDAO.instance.addStudents(classCode, students);
   }
 
   public static List<SchoolClass> findAll(boolean withCount) {
     if (withCount) {
-      return schoolClassDAO.findAllWithStudentCount();
+      return SchoolClassDAO.instance.findAllWithStudentCount();
     }
-    return schoolClassDAO.findAll();
+    return SchoolClassDAO.instance.findAll();
   }
 }

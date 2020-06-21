@@ -1,7 +1,6 @@
 package com.beohoang98.qlhs.services;
 
 import com.beohoang98.qlhs.dao.CourseDAO;
-import com.beohoang98.qlhs.dao.SchoolClassDAO;
 import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.mapping.CourseDto;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -9,7 +8,6 @@ import com.opencsv.exceptions.CsvException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,20 +17,8 @@ import org.hibernate.Hibernate;
 import org.jetbrains.annotations.NotNull;
 
 public class CourseService {
-  static CourseDAO courseDAO;
-  static SchoolClassDAO schoolClassDAO;
-
-  static {
-    try {
-      courseDAO = new CourseDAO();
-      schoolClassDAO = new SchoolClassDAO();
-    } catch (IOException ioException) {
-      ioException.printStackTrace();
-    }
-  }
-
   public static List<Course> getAllCourses() {
-    return courseDAO.findAll();
+    return CourseDAO.instance.findAll();
   }
 
   @NotNull
@@ -47,7 +33,7 @@ public class CourseService {
   @NotNull
   public static Course getById(@NotNull String courseCode, boolean loadStudent)
       throws NoSuchElementException {
-    Optional<Course> courseOptional = courseDAO.findOne(courseCode);
+    Optional<Course> courseOptional = CourseDAO.instance.findOne(courseCode);
     if (!courseOptional.isPresent()) {
       throw new NoSuchElementException(courseCode);
     }
@@ -68,7 +54,7 @@ public class CourseService {
     Course course = new Course();
     course.setCode(code);
     course.setName(name);
-    courseDAO.save(course);
+    CourseDAO.instance.save(course);
     return course;
   }
 

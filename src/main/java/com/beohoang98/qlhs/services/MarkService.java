@@ -1,6 +1,5 @@
 package com.beohoang98.qlhs.services;
 
-import com.beohoang98.qlhs.dao.MarkDAO;
 import com.beohoang98.qlhs.dao.ReCheckDAO;
 import com.beohoang98.qlhs.dao.ReCheckMarkDAO;
 import com.beohoang98.qlhs.entities.MarkType;
@@ -8,7 +7,6 @@ import com.beohoang98.qlhs.entities.ReCheck;
 import com.beohoang98.qlhs.entities.ReCheckMark;
 import com.beohoang98.qlhs.entities.ReCheckStatus;
 import com.beohoang98.qlhs.entities.Student;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,19 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MarkService {
-  static ReCheckDAO reCheckDAO;
-  static MarkDAO markDAO;
-  static ReCheckMarkDAO reCheckMarkDAO;
-
-  static {
-    try {
-      reCheckDAO = new ReCheckDAO();
-      markDAO = new MarkDAO();
-      reCheckMarkDAO = new ReCheckMarkDAO();
-    } catch (IOException ioException) {
-      ioException.printStackTrace();
-    }
-  }
 
   @NotNull
   public static ReCheck createReCheck(String courseCode, Date from, Date to) {
@@ -36,7 +21,7 @@ public class MarkService {
     check.setCourseCode(courseCode);
     check.setFromDate(from);
     check.setToDate(to);
-    Integer id = reCheckDAO.save(check);
+    Integer id = ReCheckDAO.instance.save(check);
     check.setId(id);
     return check;
   }
@@ -56,7 +41,7 @@ public class MarkService {
                 })
             .collect(Collectors.toList());
 
-    List<Integer> ids = reCheckDAO.save(checks);
+    List<Integer> ids = ReCheckDAO.instance.save(checks);
     for (int i = 0, len = checks.size(); i < len; ++i) {
       checks.get(i).setId(ids.get(i));
     }
@@ -65,11 +50,11 @@ public class MarkService {
   }
 
   public static void updateReCheck(ReCheck check) {
-    reCheckDAO.update(check);
+    ReCheckDAO.instance.update(check);
   }
 
   public static void updateReCheck(List<ReCheck> checks) {
-    reCheckDAO.update(checks);
+    ReCheckDAO.instance.update(checks);
   }
 
   public static void studentMakeReCheck(
@@ -84,10 +69,11 @@ public class MarkService {
     reCheckMark.setMarkType(type);
     reCheckMark.setReason(reason);
     reCheckMark.setExpectedMark(mark);
-    reCheckMarkDAO.save(reCheckMark);
+    ReCheckMarkDAO.instance.save(reCheckMark);
   }
 
   public static void resolveStudentReCheck(@NotNull ReCheckMark reCheckMark) {
     reCheckMark.setStatus(ReCheckStatus.UPDATED);
+    ReCheckMarkDAO.instance.save(reCheckMark);
   }
 }

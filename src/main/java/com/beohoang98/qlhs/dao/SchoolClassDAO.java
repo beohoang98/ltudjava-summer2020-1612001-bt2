@@ -2,19 +2,22 @@ package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class SchoolClassDAO extends DAO<SchoolClass, String> {
-  public SchoolClassDAO() throws IOException {
+  public static final SchoolClassDAO instance = new SchoolClassDAO();
+
+  public SchoolClassDAO() {
     super(SchoolClass.class);
   }
 
   public boolean addStudents(String classCode, List<Student> students) {
+    Session session = sessionFactory.getCurrentSession();
     Optional<SchoolClass> schoolClassOptional = findOne(classCode);
     SchoolClass schoolClass;
     if (!schoolClassOptional.isPresent()) {
@@ -36,6 +39,7 @@ public class SchoolClassDAO extends DAO<SchoolClass, String> {
   }
 
   public List<SchoolClass> findAllWithStudentCount() {
+    Session session = sessionFactory.openSession();
     List<Object[]> results =
         session
             .createSQLQuery(
@@ -47,6 +51,7 @@ public class SchoolClassDAO extends DAO<SchoolClass, String> {
             .map(objects -> new SchoolClass((String) objects[0], (BigInteger) objects[1]))
             .collect(Collectors.toList());
 
+    session.close();
     return mapped;
   }
 }
