@@ -48,6 +48,9 @@ dependencies {
 
     // UI
     implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1_pre-release_6.1'
+    // https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker
+    compile group: 'com.github.lgooddatepicker', name: 'LGoodDatePicker', version: '10.3.1'
+
 
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.3'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.3'

@@ -2,13 +2,11 @@ package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,6 +15,7 @@ public class Sidebar extends JPanel implements ActionListener {
   JButton studentBtn = new JButton(Messages.Objects.STUDENT);
   JButton classBtn = new JButton(Messages.Objects.CLASS);
   JButton courseBtn = new JButton(Messages.Objects.COURSES);
+  JButton reCheckBtn = new JButton(Messages.t("recheck"));
 
   public Sidebar() {
     super();
@@ -44,6 +43,8 @@ public class Sidebar extends JPanel implements ActionListener {
     classBtn.addActionListener(this);
     courseBtn.setActionCommand("open:course");
     courseBtn.addActionListener(this);
+    reCheckBtn.setActionCommand("open:recheck");
+    reCheckBtn.addActionListener(this);
 
     gbc.gridy = 0;
     content.add(studentBtn, gbc);

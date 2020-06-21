@@ -3,18 +3,16 @@ package com.beohoang98.qlhs.dao;
 import com.beohoang98.qlhs.entities.Gender;
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.apache.commons.collections4.IterableUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SchoolClassDaoTest {
@@ -69,7 +67,8 @@ public class SchoolClassDaoTest {
     List<Student> studentsInClass = studentDAO.findByClass(classCode);
     Assert.assertNotEquals(0, studentsInClass.size());
 
-    Student insertedStudent = IterableUtils.find(studentsInClass, object -> object.getMSSV() == 1612009);
+    Student insertedStudent =
+        IterableUtils.find(studentsInClass, object -> object.getMSSV() == 1612009);
     Assert.assertNotNull(insertedStudent);
   }
 }

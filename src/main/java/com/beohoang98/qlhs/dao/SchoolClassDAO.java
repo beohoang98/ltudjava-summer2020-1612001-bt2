@@ -2,14 +2,12 @@ package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
-
-import org.hibernate.Transaction;
-
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.hibernate.Transaction;
 
 public class SchoolClassDAO extends DAO<SchoolClass, String> {
   public SchoolClassDAO() throws IOException {

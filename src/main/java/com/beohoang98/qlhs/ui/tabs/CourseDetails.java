@@ -1,32 +1,28 @@
 package com.beohoang98.qlhs.ui.tabs;
 
-import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
 import com.beohoang98.qlhs.utils.Popup;
-
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class CourseDetails extends JPanel implements AncestorListener {
   String courseCode;
-  DataTable<Student> studentDataTable;
+  DataTable studentDataTable;
 
   JLabel codeLabel = new JLabel();
   JTextField nameField = new JTextField();
@@ -53,7 +49,7 @@ public class CourseDetails extends JPanel implements AncestorListener {
     columns.put(Messages.t("student.mssv"), "mssv");
     columns.put(Messages.t("student.name"), "mssv");
     columns.put(Messages.t("student.gender"), "gender");
-    studentDataTable = new DataTable<>(columns);
+    studentDataTable = new DataTable(columns);
 
     JPanel header = new JPanel();
     header.setLayout(new FlowLayout(FlowLayout.CENTER));

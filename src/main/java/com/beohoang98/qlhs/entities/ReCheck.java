@@ -1,7 +1,6 @@
 package com.beohoang98.qlhs.entities;
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class ReCheck {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
@@ -20,7 +20,11 @@ public class ReCheck {
   private String courseCode;
 
   @ManyToOne(targetEntity = Course.class)
-  @JoinColumn(name = "course_code", referencedColumnName = "code")
+  @JoinColumn(
+      name = "course_code",
+      referencedColumnName = "code",
+      insertable = false,
+      updatable = false)
   private Course course;
 
   @Column(name = "from_date")

@@ -1,7 +1,6 @@
 package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.entities.Student;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +21,11 @@ public class StudentDAO extends DAO<Student, Integer> {
   }
 
   public List<Student> findAll(int offset, int limit) {
-    return
-        session
-            .createQuery("FROM Student", Student.class)
-            .setMaxResults(limit)
-            .setFirstResult(offset)
-            .getResultList();
+    return session
+        .createQuery("FROM Student", Student.class)
+        .setMaxResults(limit)
+        .setFirstResult(offset)
+        .getResultList();
   }
 
   public List<Student> findAll(int offset) {

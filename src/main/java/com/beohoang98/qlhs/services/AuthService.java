@@ -1,14 +1,11 @@
 package com.beohoang98.qlhs.services;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.beohoang98.qlhs.dao.AccountDAO;
 import com.beohoang98.qlhs.entities.Account;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.util.Optional;
-
-import at.favre.lib.crypto.bcrypt.BCrypt;
+import org.jetbrains.annotations.NotNull;
 
 public class AuthService {
   static AccountDAO accountDAO;

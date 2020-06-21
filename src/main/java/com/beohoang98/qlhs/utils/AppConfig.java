@@ -7,8 +7,10 @@ import java.util.logging.Logger;
 
 public class AppConfig {
   static Properties properties;
+
   static {
-    InputStream inputStream = AppConfig.class.getClassLoader().getResourceAsStream("app.properties");
+    InputStream inputStream =
+        AppConfig.class.getClassLoader().getResourceAsStream("app.properties");
     properties = new Properties();
     try {
       properties.load(inputStream);

@@ -1,13 +1,12 @@
 package com.beohoang98.qlhs.service;
 
-import com.beohoang98.qlhs.entities.Account;
-import com.beohoang98.qlhs.services.AuthService;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import com.beohoang98.qlhs.entities.Account;
+import com.beohoang98.qlhs.services.AuthService;
+import org.junit.Test;
 
 public class AuthServiceTest {
   @Test

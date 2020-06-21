@@ -1,19 +1,16 @@
 package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.utils.HBUtils;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.PersistenceContext;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.jetbrains.annotations.NotNull;
 
 interface DAOInterface<T, ID extends Serializable> {
   Optional<T> findOne(ID id);

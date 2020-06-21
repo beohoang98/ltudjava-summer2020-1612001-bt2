@@ -1,15 +1,14 @@
 package com.beohoang98.qlhs.ui.tabs;
 
-import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.services.StudentService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
-
-import org.jetbrains.annotations.NotNull;
-
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.net.URL;
@@ -17,7 +16,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,17 +25,14 @@ import javax.swing.JTable;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
-
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.jetbrains.annotations.NotNull;
 
 public class ClassDetails extends JPanel implements AncestorListener {
   String classCode;
   Disposable disposable;
 
   //  JPanel controlPanel = new JPanel();
-  DataTable<Course> courseTable;
+  DataTable courseTable;
   JTable studentTable = new JTable();
   JScrollPane studentsWrapper = new JScrollPane();
 
@@ -62,7 +57,7 @@ public class ClassDetails extends JPanel implements AncestorListener {
     Map<String, String> courseColumns = new LinkedHashMap<>();
     courseColumns.put(Messages.t("course.code"), "code");
     courseColumns.put(Messages.t("course.name"), "name");
-    courseTable = new DataTable<>(courseColumns);
+    courseTable = new DataTable(courseColumns);
 
     contentPanel.setLayout(new GridLayout(1, 2));
     contentPanel.add(courseTable);

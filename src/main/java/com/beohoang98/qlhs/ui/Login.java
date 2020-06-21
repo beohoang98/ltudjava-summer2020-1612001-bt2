@@ -3,7 +3,6 @@ package com.beohoang98.qlhs.ui;
 import com.beohoang98.qlhs.services.AuthService;
 import com.beohoang98.qlhs.ui.styles.AppColor;
 import com.beohoang98.qlhs.ui.styles.Margin;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -18,8 +17,6 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;

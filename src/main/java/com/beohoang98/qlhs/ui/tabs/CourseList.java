@@ -7,29 +7,25 @@ import com.beohoang98.qlhs.ui.dialog.AddCourse;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
 import com.beohoang98.qlhs.utils.Popup;
-
-import org.jetbrains.annotations.NotNull;
-
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import org.jetbrains.annotations.NotNull;
 
 public class CourseList extends JPanel implements AncestorListener {
   JButton addCourseBtn = new JButton(Messages.Button.ADD);
-  DataTable<Course> courseDataTable;
+  DataTable courseDataTable;
   String currentSelectionCode = null;
   Disposable loadDataState = Disposable.empty();
   Disposable watchSelection = Disposable.empty();
@@ -48,7 +44,7 @@ public class CourseList extends JPanel implements AncestorListener {
     // ordered insert key
     columns.put(Messages.t("course.code"), "code");
     columns.put(Messages.t("course.name"), "name");
-    courseDataTable = new DataTable<>(columns);
+    courseDataTable = new DataTable(columns);
     watchSelection = courseDataTable.currentSelection.subscribe(this::onRowSelect);
 
     JPanel control = new JPanel();

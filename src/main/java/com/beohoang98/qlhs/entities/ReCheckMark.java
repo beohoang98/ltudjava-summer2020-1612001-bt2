@@ -1,5 +1,6 @@
 package com.beohoang98.qlhs.entities;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,7 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ReCheckMark {
+public class ReCheckMark implements Serializable {
+
   @Id
   @ManyToOne
   @JoinColumn(name = "check_id")

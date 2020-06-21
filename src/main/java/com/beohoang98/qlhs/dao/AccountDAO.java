@@ -1,13 +1,10 @@
 package com.beohoang98.qlhs.dao;
 
 import com.beohoang98.qlhs.entities.Account;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.util.Optional;
-
 import javax.persistence.NoResultException;
+import org.jetbrains.annotations.NotNull;
 
 public class AccountDAO extends DAO<Account, Long> {
   public AccountDAO() throws IOException {
