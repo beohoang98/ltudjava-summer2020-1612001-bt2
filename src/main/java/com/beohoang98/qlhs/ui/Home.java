@@ -35,6 +35,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Home extends JFrame implements ActionListener, ItemListener {
+
   public static Logger logger = LogManager.getLogger();
   public static String title = "Home";
 

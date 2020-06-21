@@ -26,7 +26,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ImportCoursePreview extends javax.swing.JDialog {
 
   private List<CourseDto> courseDtos;
-  private boolean isClassLoaded = false;
 
   /** Creates new form ImportCoursePreview */
   public ImportCoursePreview(java.awt.Frame parent, boolean modal) {
@@ -204,7 +203,6 @@ public class ImportCoursePreview extends javax.swing.JDialog {
         c -> {
           comboBoxClass.addItem(c.getCode());
         });
-    isClassLoaded = true;
   }
 
   void showError(Throwable t) {

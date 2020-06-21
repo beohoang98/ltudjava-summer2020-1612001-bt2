@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,11 +36,7 @@ public class Student {
   @JoinColumn(name = "class_code")
   private SchoolClass schoolClass;
 
-  @ManyToMany
-  @JoinTable(
-      name = "student_schedule_courses",
-      joinColumns = {@JoinColumn(name = "mssv")},
-      inverseJoinColumns = {@JoinColumn(name = "schedule")})
+  @ManyToMany(mappedBy = "students")
   private List<Schedule> courseSchedules = new ArrayList<>();
 
   @OneToMany private List<ReCheckMark> reCheckMarkList;

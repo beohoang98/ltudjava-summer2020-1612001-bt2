@@ -64,7 +64,7 @@ public class TabContent extends JTabbedPane implements AncestorListener {
           component = new CourseList();
           break;
         case COURSE_DETAILS:
-            // TODO
+          // TODO
           component = new CourseDetails(args[0]);
           break;
         default:
