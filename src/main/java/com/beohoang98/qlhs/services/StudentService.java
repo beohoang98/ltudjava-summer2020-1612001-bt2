@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class StudentService {
+
   public static List<StudentDto> importFromFile(FileReader reader) throws RuntimeException {
     return new CsvToBeanBuilder<StudentDto>(reader)
         .withThrowExceptions(true)
@@ -27,5 +28,9 @@ public class StudentService {
 
   public static List<Student> findByClass(String classCode) {
     return StudentDAO.instance.findByClass(classCode);
+  }
+
+  public static void update(Student student) {
+    StudentDAO.instance.update(student);
   }
 }

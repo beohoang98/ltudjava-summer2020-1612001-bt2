@@ -31,8 +31,8 @@ public class SchoolClassDaoTest {
     List<Student> students = new ArrayList<>();
     Student student1 = new Student();
     student1.setName("1");
-    student1.setMSSV(1);
-    student1.setCMND("1");
+    student1.setMssv(1);
+    student1.setCmnd("1");
     student1.setGender(Gender.MALE);
     students.add(student1);
 
@@ -54,10 +54,10 @@ public class SchoolClassDaoTest {
   @Test
   public void _03_testFindByClass() {
     Student student = new Student();
-    student.setMSSV(1612009);
+    student.setMssv(1612009);
     student.setName("Chicken Phuoc An");
     student.setGender(Gender.MALE);
-    student.setCMND("1234567891012");
+    student.setCmnd("1234567891012");
 
     SchoolClass schoolClass = new SchoolClass();
     schoolClass.setCode(classCode);
@@ -68,7 +68,7 @@ public class SchoolClassDaoTest {
     Assert.assertNotEquals(0, studentsInClass.size());
 
     Student insertedStudent =
-        IterableUtils.find(studentsInClass, object -> object.getMSSV() == 1612009);
+        IterableUtils.find(studentsInClass, object -> object.getMssv() == 1612009);
     Assert.assertNotNull(insertedStudent);
   }
 }

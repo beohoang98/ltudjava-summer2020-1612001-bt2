@@ -7,6 +7,7 @@ import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.entities.Mark;
 import com.beohoang98.qlhs.entities.ReCheck;
 import com.beohoang98.qlhs.entities.ReCheckMark;
+import com.beohoang98.qlhs.entities.Schedule;
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -17,6 +18,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HBUtils {
+
   @PersistenceContext private static SessionFactory sessionFactory;
 
   private static synchronized SessionFactory load() throws IOException {
@@ -39,6 +41,7 @@ public class HBUtils {
         .addAnnotatedClass(ReCheck.class)
         .addAnnotatedClass(ReCheckMark.class)
         .addAnnotatedClass(Mark.class)
+        .addAnnotatedClass(Schedule.class)
         .buildSessionFactory();
   }
 
@@ -51,6 +54,8 @@ public class HBUtils {
   }
 
   public static void down() {
-    if (sessionFactory != null) sessionFactory.close();
+    if (sessionFactory != null) {
+      sessionFactory.close();
+    }
   }
 }

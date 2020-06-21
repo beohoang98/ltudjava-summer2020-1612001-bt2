@@ -21,9 +21,9 @@ public class SchoolClassService {
             .map(
                 studentDto -> {
                   Student student = new Student();
-                  student.setMSSV(studentDto.mssv);
+                  student.setMssv(studentDto.mssv);
                   student.setName(studentDto.name);
-                  student.setCMND(studentDto.cmnd);
+                  student.setCmnd(studentDto.cmnd);
                   student.setGender(studentDto.gender.equals("nam") ? Gender.MALE : Gender.FEMALE);
                   return student;
                 })

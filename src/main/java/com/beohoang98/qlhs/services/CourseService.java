@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.apache.commons.lang3.NotImplementedException;
-import org.hibernate.Hibernate;
 import org.jetbrains.annotations.NotNull;
 
 public class CourseService {
+
   public static List<Course> getAllCourses() {
     return CourseDAO.instance.findAll();
   }
@@ -33,14 +33,17 @@ public class CourseService {
   @NotNull
   public static Course getById(@NotNull String courseCode, boolean loadStudent)
       throws NoSuchElementException {
+    if (loadStudent) {
+      Course c = CourseDAO.instance.findByIdWithStudents(courseCode);
+      if (c == null) {
+        throw new NoSuchElementException(courseCode);
+      }
+    }
     Optional<Course> courseOptional = CourseDAO.instance.findOne(courseCode);
     if (!courseOptional.isPresent()) {
       throw new NoSuchElementException(courseCode);
     }
     Course course = courseOptional.get();
-    if (loadStudent) {
-      Hibernate.initialize(course.getStudents());
-    }
     return course;
   }
 

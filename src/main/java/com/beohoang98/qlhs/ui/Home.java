@@ -2,7 +2,7 @@ package com.beohoang98.qlhs.ui;
 
 import com.beohoang98.qlhs.ui.components.Sidebar;
 import com.beohoang98.qlhs.ui.components.TabContent;
-import com.beohoang98.qlhs.ui.dialog.ImportCourseFromCSVDialog;
+import com.beohoang98.qlhs.ui.dialog.ImportCoursePreview;
 import com.beohoang98.qlhs.ui.dialog.ImportPreview;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.styles.AppColor;
@@ -28,7 +28,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.JMarsDarkTheme;
@@ -60,7 +59,7 @@ public class Home extends JFrame implements ActionListener, ItemListener {
     try {
       UIManager.setLookAndFeel(new MaterialLookAndFeel());
       MaterialLookAndFeel.changeTheme(new JMarsDarkTheme());
-    } catch (UnsupportedLookAndFeelException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
@@ -165,15 +164,8 @@ public class Home extends JFrame implements ActionListener, ItemListener {
   }
 
   void handleImportCourse() {
-    final JFileChooser chooser = new JFileChooser();
-    chooser.setCurrentDirectory(new File("."));
-    chooser.setFileFilter(new FileNameExtensionFilter("CSV File", "csv"));
-    int returnVal = chooser.showOpenDialog(this);
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-      File file = chooser.getSelectedFile();
-      JDialog importDialog = new ImportCourseFromCSVDialog(this, file);
-      importDialog.setVisible(true);
-    }
+    JDialog importDialog = new ImportCoursePreview(this, true);
+    importDialog.setVisible(true);
   }
 
   @Override

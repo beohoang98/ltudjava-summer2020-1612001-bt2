@@ -19,10 +19,10 @@ public class StudentDaoTest {
   @Test
   public void shouldInsert() {
     Student student = new Student();
-    student.setMSSV(1612001);
+    student.setMssv(1612001);
     student.setName("An");
     student.setGender(Gender.MALE);
-    student.setCMND("123456789");
+    student.setCmnd("123456789");
     int mssv = studentDAO.save(student);
     Assert.assertEquals(1612001, mssv);
   }
@@ -30,10 +30,10 @@ public class StudentDaoTest {
   @Test
   public void shouldUpdate() {
     Student student = new Student();
-    student.setMSSV(1612027);
+    student.setMssv(1612027);
     student.setName("Hai Au");
     student.setGender(Gender.FEMALE);
-    student.setCMND("12345678910");
+    student.setCmnd("12345678910");
     int mssv = studentDAO.save(student);
 
     Optional<Student> get01 = studentDAO.findOne(mssv);

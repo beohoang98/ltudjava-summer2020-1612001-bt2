@@ -46,10 +46,10 @@ public class StudentTable extends JScrollPane {
             student -> {
               List<?> cells =
                   Arrays.asList(
-                      student.getMSSV(),
+                      student.getMssv(),
                       student.getName(),
                       student.getGender(),
-                      student.getCMND(),
+                      student.getCmnd(),
                       student.getSchoolClass().getCode());
               tableModel.addRow(cells.toArray());
             });

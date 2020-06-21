@@ -126,7 +126,7 @@ public class ClassDetails extends JPanel implements AncestorListener {
     for (Student student : students) {
       List<?> cells =
           Arrays.asList(
-              student.getMSSV(), student.getName(), student.getGender(), student.getCMND());
+              student.getMssv(), student.getName(), student.getGender(), student.getCmnd());
       model.addRow(cells.toArray());
     }
 

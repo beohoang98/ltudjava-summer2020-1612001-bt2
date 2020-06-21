@@ -1,8 +1,7 @@
 package com.beohoang98.qlhs.entities;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 @Entity()
 @Table(name = "student")
 public class Student {
+
   @Id private Integer mssv;
 
   @NotBlank private String name;
@@ -36,8 +37,12 @@ public class Student {
   @JoinColumn(name = "class_code")
   private SchoolClass schoolClass;
 
-  @ManyToMany(mappedBy = "students")
-  private Set<Course> courses = new HashSet<>();
+  @ManyToMany
+  @JoinTable(
+      name = "student_schedule_courses",
+      joinColumns = {@JoinColumn(name = "mssv")},
+      inverseJoinColumns = {@JoinColumn(name = "schedule")})
+  private List<Schedule> courseSchedules = new ArrayList<>();
 
   @OneToMany private List<ReCheckMark> reCheckMarkList;
 
@@ -45,11 +50,11 @@ public class Student {
     return reCheckMarkList;
   }
 
-  public Integer getMSSV() {
+  public Integer getMssv() {
     return mssv;
   }
 
-  public void setMSSV(Integer mssv) {
+  public void setMssv(Integer mssv) {
     this.mssv = mssv;
   }
 
@@ -61,11 +66,11 @@ public class Student {
     this.name = name;
   }
 
-  public String getCMND() {
+  public String getCmnd() {
     return cmnd;
   }
 
-  public void setCMND(String cmnd) {
+  public void setCmnd(String cmnd) {
     this.cmnd = cmnd;
   }
 
@@ -85,7 +90,7 @@ public class Student {
     this.schoolClass = schoolClass;
   }
 
-  public Set<Course> getCourses() {
-    return courses;
+  public List<Schedule> getCourseSchedules() {
+    return courseSchedules;
   }
 }
