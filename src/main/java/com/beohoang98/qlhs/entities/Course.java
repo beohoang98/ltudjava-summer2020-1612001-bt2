@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,12 +24,15 @@ public class Course {
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "class_code")
   SchoolClass schoolClass;
+
   @Id
   @Column(name = "code")
   private String code;
+
   @Column(nullable = false)
   @NotBlank
   private String name;
+
   @ManyToMany(
       targetEntity = Student.class,
       cascade = {CascadeType.ALL})

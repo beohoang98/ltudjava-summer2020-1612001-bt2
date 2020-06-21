@@ -19,8 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.jetbrains.annotations.NotNull;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.jetbrains.annotations.NotNull;
 
 public class DataTable extends JScrollPane {
 

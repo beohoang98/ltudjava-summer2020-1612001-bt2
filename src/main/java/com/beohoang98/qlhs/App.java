@@ -11,7 +11,6 @@ import com.beohoang98.qlhs.utils.HBUtils;
 import java.io.IOException;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import mdlaf.MaterialLookAndFeel;
 import mdlaf.themes.JMarsDarkTheme;
 import org.apache.logging.log4j.LogManager;
