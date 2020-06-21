@@ -40,18 +40,15 @@ public class ScheduleDAO extends DAO<Schedule, Integer> {
     return save(schedule);
   }
 
-  public Schedule findByClass(String classCode) {
+  public List<Schedule> findByClass(String classCode) {
     JDBCConnectionException ex = null;
     Schedule schedule = null;
     int retry = 1;
     try (Session session = sessionFactory.openSession()) {
       Criteria crit =
-          session.createCriteria(Schedule.class).add(Restrictions.eq("class_code", classCode));
+          session.createCriteria(Schedule.class).add(Restrictions.eq("classCode", classCode));
       List<Schedule> schedules = crit.list();
-      if (schedules != null && !schedules.isEmpty()) {
-        schedule = schedules.get(0);
-      }
-      return schedule;
+      return schedules;
     } catch (JDBCConnectionException e) {
       logger.error("Error get " + retry, e);
       ex = e;

@@ -31,7 +31,7 @@ public class ScheduleService {
     return ScheduleDAO.instance.findAll();
   }
 
-  public Schedule findByClass(String code) {
+  public List<Schedule> findByClass(String code) {
     return ScheduleDAO.instance.findByClass(code);
   }
 

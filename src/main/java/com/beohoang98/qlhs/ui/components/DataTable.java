@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.jetbrains.annotations.NotNull;
 
 public class DataTable extends JScrollPane {
@@ -79,8 +80,8 @@ public class DataTable extends JScrollPane {
           .forEach(
               column -> {
                 try {
-                  Map<String, Object> props = PropertyUtils.describe(item);
-                  cells.add(props.get(column));
+                  PropertyUtilsBean pub = new PropertyUtilsBean();
+                  cells.add(pub.getProperty(item, column));
                 } catch (IllegalAccessException noSuchFieldException) {
                   noSuchFieldException.printStackTrace();
                   System.out.print(item);

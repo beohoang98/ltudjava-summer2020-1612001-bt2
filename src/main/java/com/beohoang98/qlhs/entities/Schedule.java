@@ -32,7 +32,7 @@ public class Schedule implements Serializable {
   @Column(name = "class_code")
   String classCode;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(
       name = "course_code",
       referencedColumnName = "code",
@@ -40,7 +40,7 @@ public class Schedule implements Serializable {
       updatable = false)
   Course course;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(
       name = "class_code",
       referencedColumnName = "code",

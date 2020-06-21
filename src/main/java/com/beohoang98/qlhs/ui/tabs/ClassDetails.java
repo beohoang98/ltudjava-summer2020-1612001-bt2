@@ -1,7 +1,8 @@
 package com.beohoang98.qlhs.ui.tabs;
 
+import com.beohoang98.qlhs.entities.Schedule;
 import com.beohoang98.qlhs.entities.Student;
-import com.beohoang98.qlhs.services.CourseService;
+import com.beohoang98.qlhs.services.ScheduleService;
 import com.beohoang98.qlhs.services.StudentService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
@@ -28,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jetbrains.annotations.NotNull;
 
 public class ClassDetails extends JPanel implements AncestorListener {
+
   String classCode;
   Disposable disposable;
 
@@ -55,8 +57,9 @@ public class ClassDetails extends JPanel implements AncestorListener {
     add(contentPanel, BorderLayout.CENTER);
 
     Map<String, String> courseColumns = new LinkedHashMap<>();
-    courseColumns.put(Messages.t("course.code"), "code");
-    courseColumns.put(Messages.t("course.name"), "name");
+    courseColumns.put(Messages.t("course.code"), "classCode");
+    courseColumns.put(Messages.t("course.name"), "course.name");
+    courseColumns.put(Messages.t("course.room"), "room");
     courseTable = new DataTable(courseColumns);
 
     contentPanel.setLayout(new GridLayout(1, 2));
@@ -98,11 +101,11 @@ public class ClassDetails extends JPanel implements AncestorListener {
 
   void loadCourses() {
     courseTable.setLoading(true);
-    Single.fromCallable(() -> CourseService.getByClass(this.classCode))
+    Single.fromCallable(() -> ScheduleService.instance.findByClass(classCode))
         .subscribeOn(Schedulers.io())
         .observeOn(Schedulers.single())
         .doFinally(() -> courseTable.setLoading(false))
-        .subscribe(courseTable::setData, this::showError);
+        .subscribe(this::fillCoursesToTable, this::showError);
   }
 
   void loadStudents() {
@@ -114,6 +117,10 @@ public class ClassDetails extends JPanel implements AncestorListener {
               studentsWrapper.setViewportView(studentTable);
             })
         .subscribe(this::fillStudentsToTable, this::showError);
+  }
+
+  void fillCoursesToTable(List<Schedule> schedules) {
+    courseTable.setData(schedules);
   }
 
   void fillStudentsToTable(@NotNull List<Student> students) {
