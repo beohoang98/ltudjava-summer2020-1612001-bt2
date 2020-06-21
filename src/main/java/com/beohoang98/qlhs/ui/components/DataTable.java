@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,13 +19,22 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.jetbrains.annotations.NotNull;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.jetbrains.annotations.NotNull;
 
-public class DataTable<T> extends JScrollPane {
-  private final Map<String, String> columns;
+public class DataTable extends JScrollPane {
+
+  private Map<String, String> columns;
   public final PublishSubject<Object[]> currentSelection = PublishSubject.create();
   private JTable table;
   private boolean isLoading = false;
   private JLabel loadingLabel;
+
+  public DataTable() {
+    super();
+    columns = new LinkedHashMap<>();
+    initComponents();
+  }
 
   public DataTable(@NotNull Map<String, String> columns) {
     super();
@@ -52,7 +62,11 @@ public class DataTable<T> extends JScrollPane {
     setViewportView(table);
   }
 
-  public void setData(@NotNull List<T> data) {
+  public void setColumns(LinkedHashMap<String, String> cols) {
+    columns = cols;
+  }
+
+  public void setData(@NotNull List<?> data) {
     DefaultTableModel model =
         new DefaultTableModel(columns.keySet().toArray(), 0) {
           @Override
@@ -60,7 +74,7 @@ public class DataTable<T> extends JScrollPane {
             return false;
           }
         };
-    for (T item : data) {
+    for (Object item : data) {
       List<Object> cells = new ArrayList<>();
       columns
           .values()
@@ -81,7 +95,7 @@ public class DataTable<T> extends JScrollPane {
     this.table.setModel(model);
   }
 
-  public void addData(T item) {
+  public void addData(Object item) {
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     List<Object> cells = new ArrayList<>();
     columns

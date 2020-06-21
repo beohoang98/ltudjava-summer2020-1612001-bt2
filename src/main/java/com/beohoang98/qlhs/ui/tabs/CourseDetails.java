@@ -1,6 +1,5 @@
 package com.beohoang98.qlhs.ui.tabs;
 
-import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.ui.components.DataTable;
 import com.beohoang98.qlhs.ui.messages.Messages;
@@ -23,7 +22,7 @@ import javax.swing.event.AncestorListener;
 
 public class CourseDetails extends JPanel implements AncestorListener {
   String courseCode;
-  DataTable<Student> studentDataTable;
+  DataTable studentDataTable;
 
   JLabel codeLabel = new JLabel();
   JTextField nameField = new JTextField();
@@ -50,7 +49,7 @@ public class CourseDetails extends JPanel implements AncestorListener {
     columns.put(Messages.t("student.mssv"), "mssv");
     columns.put(Messages.t("student.name"), "mssv");
     columns.put(Messages.t("student.gender"), "gender");
-    studentDataTable = new DataTable<>(columns);
+    studentDataTable = new DataTable(columns);
 
     JPanel header = new JPanel();
     header.setLayout(new FlowLayout(FlowLayout.CENTER));

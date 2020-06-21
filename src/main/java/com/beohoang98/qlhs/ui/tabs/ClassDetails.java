@@ -1,6 +1,5 @@
 package com.beohoang98.qlhs.ui.tabs;
 
-import com.beohoang98.qlhs.entities.Course;
 import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.services.StudentService;
@@ -33,7 +32,7 @@ public class ClassDetails extends JPanel implements AncestorListener {
   Disposable disposable;
 
   //  JPanel controlPanel = new JPanel();
-  DataTable<Course> courseTable;
+  DataTable courseTable;
   JTable studentTable = new JTable();
   JScrollPane studentsWrapper = new JScrollPane();
 
@@ -58,7 +57,7 @@ public class ClassDetails extends JPanel implements AncestorListener {
     Map<String, String> courseColumns = new LinkedHashMap<>();
     courseColumns.put(Messages.t("course.code"), "code");
     courseColumns.put(Messages.t("course.name"), "name");
-    courseTable = new DataTable<>(courseColumns);
+    courseTable = new DataTable(courseColumns);
 
     contentPanel.setLayout(new GridLayout(1, 2));
     contentPanel.add(courseTable);

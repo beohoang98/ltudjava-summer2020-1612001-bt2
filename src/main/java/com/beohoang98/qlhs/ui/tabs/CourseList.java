@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CourseList extends JPanel implements AncestorListener {
   JButton addCourseBtn = new JButton(Messages.Button.ADD);
-  DataTable<Course> courseDataTable;
+  DataTable courseDataTable;
   String currentSelectionCode = null;
   Disposable loadDataState = Disposable.empty();
   Disposable watchSelection = Disposable.empty();
@@ -44,7 +44,7 @@ public class CourseList extends JPanel implements AncestorListener {
     // ordered insert key
     columns.put(Messages.t("course.code"), "code");
     columns.put(Messages.t("course.name"), "name");
-    courseDataTable = new DataTable<>(columns);
+    courseDataTable = new DataTable(columns);
     watchSelection = courseDataTable.currentSelection.subscribe(this::onRowSelect);
 
     JPanel control = new JPanel();

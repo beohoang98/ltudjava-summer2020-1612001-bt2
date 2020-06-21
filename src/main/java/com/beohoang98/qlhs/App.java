@@ -26,9 +26,9 @@ public class App {
     Runtime.getRuntime().addShutdownHook(new ShutdownHook());
     bootstrap();
     try {
-      UIManager.setLookAndFeel(new MaterialLookAndFeel());
+      UIManager.setLookAndFeel(MaterialLookAndFeel.class.getName());
       MaterialLookAndFeel.changeTheme(new JMarsDarkTheme());
-    } catch (UnsupportedLookAndFeelException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
     SwingUtilities.invokeLater(

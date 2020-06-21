@@ -4,6 +4,9 @@ import com.beohoang98.qlhs.App;
 import com.beohoang98.qlhs.entities.Account;
 import com.beohoang98.qlhs.entities.ClassCourse;
 import com.beohoang98.qlhs.entities.Course;
+import com.beohoang98.qlhs.entities.Mark;
+import com.beohoang98.qlhs.entities.ReCheck;
+import com.beohoang98.qlhs.entities.ReCheckMark;
 import com.beohoang98.qlhs.entities.SchoolClass;
 import com.beohoang98.qlhs.entities.Student;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -33,6 +36,9 @@ public class HBUtils {
         .addAnnotatedClass(Course.class)
         .addAnnotatedClass(ClassCourse.class)
         .addAnnotatedClass(Account.class)
+        .addAnnotatedClass(ReCheck.class)
+        .addAnnotatedClass(ReCheckMark.class)
+        .addAnnotatedClass(Mark.class)
         .buildSessionFactory();
   }
 

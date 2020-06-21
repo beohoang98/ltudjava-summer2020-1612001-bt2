@@ -15,6 +15,7 @@ public class Sidebar extends JPanel implements ActionListener {
   JButton studentBtn = new JButton(Messages.Objects.STUDENT);
   JButton classBtn = new JButton(Messages.Objects.CLASS);
   JButton courseBtn = new JButton(Messages.Objects.COURSES);
+  JButton reCheckBtn = new JButton(Messages.t("recheck"));
 
   public Sidebar() {
     super();
@@ -42,6 +43,8 @@ public class Sidebar extends JPanel implements ActionListener {
     classBtn.addActionListener(this);
     courseBtn.setActionCommand("open:course");
     courseBtn.addActionListener(this);
+    reCheckBtn.setActionCommand("open:recheck");
+    reCheckBtn.addActionListener(this);
 
     gbc.gridy = 0;
     content.add(studentBtn, gbc);

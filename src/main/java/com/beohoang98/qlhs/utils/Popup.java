@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import org.jetbrains.annotations.NotNull;
 
 public class Popup {
+
   Component component;
 
   @NotNull
@@ -19,5 +20,9 @@ public class Popup {
     throwable.printStackTrace();
     JOptionPane.showMessageDialog(
         component, throwable.getMessage(), Messages.t("error_title"), JOptionPane.ERROR_MESSAGE);
+  }
+
+  public void info(String text) {
+    JOptionPane.showMessageDialog(component, text);
   }
 }

@@ -8,7 +8,8 @@ public enum AvailableTabs {
   CLASS_DETAILS,
   COURSE,
   COURSE_DETAILS,
-  CLASS_COURSE;
+  CLASS_COURSE,
+  RECHECK;
 
   boolean equals(@NotNull String str) {
     return this.name().toLowerCase().equals(str.toLowerCase());
