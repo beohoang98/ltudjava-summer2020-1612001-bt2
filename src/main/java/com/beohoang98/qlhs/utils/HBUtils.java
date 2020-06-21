@@ -27,6 +27,9 @@ public class HBUtils {
     if (!properties.containsKey("hibernate.connection.url")) {
       properties.setProperty("hibernate.connection.url", dotenv.get("JDBC_DATABASE_URL"));
     }
+    if (!properties.containsKey("hibernate.dialect")) {
+      properties.setProperty("hibernate.dialect", dotenv.get("JDBC_DRIVER"));
+    }
     return new Configuration()
         .addProperties(properties)
         .addAnnotatedClass(Student.class)
