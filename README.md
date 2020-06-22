@@ -3,23 +3,17 @@ Student Management App written with Java Swing and [Hibernate](https://hibernate
 
 ## Build & Run
 
+0. Environment variables
+
+- Copy `.env.example` to `.env` and set your DB's variables
+
 1. Run with Jar (no need to build)
 
 ```bash
-# linux/mac
-export JDBC_DATABASE_URL=jdbc:postgresql://127.0.0.1:5432/<your_database>?user=<your_username>&password=<your_password>
-export JDBC_DRIVER=org.hibernate.dialect.PostgreSQL94Dialect
-java -jar ./jar/qlhs.jar
-
-# windows
-set JDBC_DATABASE_URL=jdbc:postgresql://127.0.0.1:5432/<your_database>?user=<your_username>&password=<your_password>
-set JDBC_DRIVER=org.hibernate.dialect.PostgreSQL94Dialect
-java -jar ./jar/qlhs.jar
+java -cp jar/qlhs.jar:libs/postgresql-42.2.14.jar com.beohoang98.qlhs.App
 ```
 
 2. Run with Gradle
-
-- Copy `.env.example` to `.env` and set your DB's variables
 
 - Project using [Gradle](https://gradle.org/) to manage dependencies and builds. So you need install Gradle to build this
 
