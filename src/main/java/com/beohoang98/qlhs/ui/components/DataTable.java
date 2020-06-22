@@ -1,12 +1,16 @@
 package com.beohoang98.qlhs.ui.components;
 
 import com.beohoang98.qlhs.ui.messages.Messages;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.ReplaySubject;
+import io.reactivex.rxjava3.subjects.Subject;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,27 +20,34 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DataTable extends JScrollPane {
 
   private Map<String, String> columns;
-  public final PublishSubject<Object[]> currentSelection = PublishSubject.create();
+
+  public final Subject<Object[]> currentSelection;
   private JTable table;
   private boolean isLoading = false;
   private JLabel loadingLabel;
 
+  List<SelectHandler> selectHandlers = new ArrayList<>();
+
   public DataTable() {
     super();
+    this.currentSelection = ReplaySubject.create();
     columns = new LinkedHashMap<>();
     initComponents();
   }
 
   public DataTable(@NotNull Map<String, String> columns) {
     super();
+    this.currentSelection = ReplaySubject.create();
     this.columns = columns;
     initComponents();
   }
@@ -48,8 +59,18 @@ public class DataTable extends JScrollPane {
     table.addMouseListener(
         new MouseAdapter() {
           @Override
-          public void mouseClicked(MouseEvent mouseEvent) {
-            onSelect(mouseEvent);
+          public void mouseClicked(MouseEvent me) {
+            if (SwingUtilities.isLeftMouseButton(me)) {
+              onSelect(me);
+            }
+            ;
+          }
+        });
+    table.addFocusListener(
+        new FocusAdapter() {
+          @Override
+          public void focusLost(FocusEvent fe) {
+            onSelect(null);
           }
         });
 
@@ -114,6 +135,11 @@ public class DataTable extends JScrollPane {
     model.addRow(cells.toArray());
   }
 
+  public void removeData(int index) {
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.removeRow(index);
+  }
+
   public boolean isLoading() {
     return isLoading;
   }
@@ -127,7 +153,11 @@ public class DataTable extends JScrollPane {
     }
   }
 
-  void onSelect(@NotNull MouseEvent mouseEvent) {
+  void onSelect(@Nullable MouseEvent mouseEvent) {
+    if (mouseEvent == null) {
+      currentSelection.onNext(Arrays.asList().toArray());
+      return;
+    }
     int rowIdx = table.rowAtPoint(mouseEvent.getPoint());
     if (rowIdx >= 0) {
       List<Object> cells = new ArrayList<>();
@@ -135,6 +165,18 @@ public class DataTable extends JScrollPane {
         cells.add(table.getValueAt(rowIdx, cellIdx));
       }
       currentSelection.onNext(cells.toArray());
+      for (SelectHandler handler : selectHandlers) {
+        handler.onSelect(cells.toArray());
+      }
     }
+  }
+
+  public void addSelectHandler(SelectHandler handler) {
+    selectHandlers.add(handler);
+  }
+
+  public interface SelectHandler {
+
+    void onSelect(Object[] cells);
   }
 }

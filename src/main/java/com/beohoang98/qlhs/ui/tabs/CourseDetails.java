@@ -10,6 +10,7 @@ import com.beohoang98.qlhs.entities.Schedule;
 import com.beohoang98.qlhs.entities.Student;
 import com.beohoang98.qlhs.services.CourseService;
 import com.beohoang98.qlhs.services.ScheduleService;
+import com.beohoang98.qlhs.services.StudentService;
 import com.beohoang98.qlhs.ui.dialog.AddStudent;
 import com.beohoang98.qlhs.ui.messages.Messages;
 import com.beohoang98.qlhs.ui.state.TabState;
@@ -20,6 +21,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +31,7 @@ public class CourseDetails extends javax.swing.JPanel {
 
   String courseCode;
   Schedule currentCourse;
+  Integer currentSelectMssv;
 
   /** Creates new form CourseDetails */
   public CourseDetails() {
@@ -38,10 +41,10 @@ public class CourseDetails extends javax.swing.JPanel {
   public CourseDetails(String courseCode) {
     this.courseCode = courseCode;
     initComponents();
-    watchCourseCode();
+    watchEvent();
   }
 
-  void watchCourseCode() {
+  void watchEvent() {
     TabState.currentTabObserver
         .filter(context -> AvailableTabs.COURSE_DETAILS.equals(context.tab))
         .subscribe(
@@ -51,6 +54,17 @@ public class CourseDetails extends javax.swing.JPanel {
                 loadData();
               }
             });
+    studentTable.addSelectHandler(
+        cells -> {
+          if (cells.length == 0) {
+            currentSelectMssv = null;
+            removeStudent.setEnabled(false);
+            return;
+          }
+          int mssv = (Integer) cells[0];
+          currentSelectMssv = mssv;
+          removeStudent.setEnabled(true);
+        });
   }
 
   /**
@@ -89,7 +103,9 @@ public class CourseDetails extends javax.swing.JPanel {
 
           public void ancestorMoved(javax.swing.event.AncestorEvent evt) {}
 
-          public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {}
+          public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            formAncestorRemoved(evt);
+          }
         });
     setLayout(new java.awt.BorderLayout());
 
@@ -181,7 +197,7 @@ public class CourseDetails extends javax.swing.JPanel {
           }
         });
 
-    removeClass.setBackground(new java.awt.Color(255, 51, 51));
+    removeClass.setBackground(new java.awt.Color(102, 0, 0));
     removeClass.setText("-");
     removeClass.setEnabled(false);
 
@@ -230,6 +246,13 @@ public class CourseDetails extends javax.swing.JPanel {
     jPanel3.add(jPanel1, gridBagConstraints);
 
     jPanel2.setLayout(new java.awt.BorderLayout());
+
+    studentTable.addFocusListener(
+        new java.awt.event.FocusAdapter() {
+          public void focusLost(java.awt.event.FocusEvent evt) {
+            studentTableFocusLost(evt);
+          }
+        });
     jPanel2.add(studentTable, java.awt.BorderLayout.CENTER);
 
     jLabel2.setText("Sinh viên");
@@ -242,10 +265,16 @@ public class CourseDetails extends javax.swing.JPanel {
           }
         });
 
-    removeStudent.setBackground(new java.awt.Color(255, 51, 51));
+    removeStudent.setBackground(new java.awt.Color(102, 0, 0));
     removeStudent.setForeground(new java.awt.Color(0, 0, 0));
     removeStudent.setText("-");
     removeStudent.setEnabled(false);
+    removeStudent.addActionListener(
+        new java.awt.event.ActionListener() {
+          public void actionPerformed(java.awt.event.ActionEvent evt) {
+            removeStudentActionPerformed(evt);
+          }
+        });
 
     javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
     jPanel6.setLayout(jPanel6Layout);
@@ -293,6 +322,29 @@ public class CourseDetails extends javax.swing.JPanel {
 
     add(jPanel3, java.awt.BorderLayout.CENTER);
   } // </editor-fold>//GEN-END:initComponents
+
+  private void formAncestorRemoved(
+      javax.swing.event.AncestorEvent evt) { // GEN-FIRST:event_formAncestorRemoved
+  } // GEN-LAST:event_formAncestorRemoved
+
+  private void studentTableFocusLost(
+      java.awt.event.FocusEvent evt) { // GEN-FIRST:event_studentTableFocusLost
+    currentSelectMssv = null;
+    removeStudent.setEnabled(false);
+  } // GEN-LAST:event_studentTableFocusLost
+
+  private void removeStudentActionPerformed(
+      java.awt.event.ActionEvent evt) { // GEN-FIRST:event_removeStudentActionPerformed
+    if (currentSelectMssv != null) {
+      Optional<Student> student = StudentService.findByMSSV(currentSelectMssv);
+      if (student.isPresent()) {
+        currentCourse.getStudents().remove(student.get());
+        ScheduleService.instance.update(currentCourse);
+        currentSelectMssv = null;
+        removeStudent.setEnabled(false);
+      }
+    }
+  } // GEN-LAST:event_removeStudentActionPerformed
 
   private void nameTextActionPerformed(
       java.awt.event.ActionEvent evt) { // GEN-FIRST:event_nameTextActionPerformed

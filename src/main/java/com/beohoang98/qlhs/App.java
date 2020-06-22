@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class App {
+
   public static Logger logger = LogManager.getLogger(App.class);
   static Login login;
   static Home home;
@@ -55,9 +56,16 @@ public class App {
 
   public static void showHome() {
     home = new Home();
+    home.setLogOutHandler(
+        () -> {
+          Login login = new Login();
+          login.setVisible(true);
+          home.dispose();
+        });
   }
 
   public static class ShutdownHook extends Thread {
+
     @Override
     public void run() {
       HBUtils.down();

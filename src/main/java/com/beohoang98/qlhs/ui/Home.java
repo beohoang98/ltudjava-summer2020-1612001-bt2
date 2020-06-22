@@ -43,6 +43,8 @@ public class Home extends JFrame implements ActionListener, ItemListener {
   private final JPanel content = new JPanel();
   private final JMenuBar menuBar = new JMenuBar();
 
+  LogOutHandler logOutHandler;
+
   public Home() {
     super(title);
     setPreferredSize(new Dimension(1280, 720));
@@ -142,6 +144,11 @@ public class Home extends JFrame implements ActionListener, ItemListener {
       case "course:import":
         handleImportCourse();
         break;
+      case "logOut":
+        if (logOutHandler != null) {
+          logOutHandler.onLogOut();
+        }
+        break;
     }
   }
 
@@ -169,6 +176,14 @@ public class Home extends JFrame implements ActionListener, ItemListener {
     importDialog.setVisible(true);
   }
 
+  public void setLogOutHandler(LogOutHandler handler) {
+    logOutHandler = handler;
+  }
+
   @Override
   public void itemStateChanged(ItemEvent itemEvent) {}
+
+  public interface LogOutHandler {
+    void onLogOut();
+  }
 }

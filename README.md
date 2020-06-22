@@ -43,17 +43,17 @@ Student Management App written with Java Swing and [Hibernate](https://hibernate
 |X  | 1. Import danh sách lớp bằng CSV          | 10
 |   | 2. Thêm một sinh viên vào hệ thống        | 0
 |X  | 3. Import thời khóa biểu bằng CSV         | 10
-|X  | 4. Giáo vụ (đăng ký theo môn)             | 5
+|X  | 4. Giáo vụ (đăng ký theo môn)             | 10
 |X  | 5. Giáo vụ (danh sách lớp)                | 10
-|   | 6. Thời khóa biểu                         | 0
+|X  | 6. Thời khóa biểu                         | 10
 |   | 7. Import bẳng điểm                       | 0
 |   | 8. Xem bảng điểm, thống kê đậu rớt        | 0
 |   | 9. Sửa điểm                               | 0
 |   | 10. Sinh viên xem điểm                    | 0
-|X  | 11. Đăng nhập / Đăng xuất                 | 5
+|X  | 11. Đăng nhập / Đăng xuất                 | 10
 |   | 12. Đổi mật khẩu                          | 0
 |   | 13. Phúc khảo tất cả các môn              | 0
 |   | 14. Xem phúc khảo của SV, cập nhật trạng thái | 0
 |   | 15. Sinh viên phúc khảo                   | 0
 |---|
-|   |   **Total**| 40 
+|   |   **Total**| 60 

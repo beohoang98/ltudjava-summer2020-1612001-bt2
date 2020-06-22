@@ -24,6 +24,7 @@ import javax.swing.event.AncestorListener;
 import org.jetbrains.annotations.NotNull;
 
 public class CourseList extends JPanel implements AncestorListener {
+
   JButton addCourseBtn = new JButton(Messages.Button.ADD);
   DataTable courseDataTable;
   String currentSelectionCode = null;
@@ -81,8 +82,10 @@ public class CourseList extends JPanel implements AncestorListener {
   }
 
   void onRowSelect(@NotNull Object[] cells) {
-    String code = (String) cells[0];
-    TabState.addTab("course_details", code);
+    if (cells.length > 0) {
+      String code = (String) cells[0];
+      TabState.addTab("course_details", code);
+    }
   }
 
   @Override
