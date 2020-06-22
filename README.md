@@ -54,7 +54,7 @@ java -jar ./jar/qlhs.jar
 
 ## Video
 
-- [Not recorded yet](#)
+- [Youtube](https://youtu.be/kzPPIWRFIXY)
 
 ## Tự chấm điểm
 
